@@ -71,7 +71,6 @@ class Encryption
         if (!is_string($data)) {
             return null;
         }
-        echo "<br><br>";
         return openssl_public_encrypt($data, $encrypted, $this->_getPublicKey()) ? base64_encode($encrypted) : null;
     }
 

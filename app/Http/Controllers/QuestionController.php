@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Subject;
+use App\Question;
+use App\Helper as RSA;
+use App\Key;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -13,7 +18,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        return view('question.index');
+        $subjects = Subject::with('questions')->get();
+        return view('question.index', compact('subjects'));
     }
 
     /**
@@ -21,9 +27,12 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // $decryptionData = $rsa->privDecrypt($ecryptionData);
+        $subject_id = $request->subject_id;
+        $questions = Question::where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
+        return view('question.create', compact('subject_id', 'questions'));
     }
 
     /**
@@ -34,7 +43,24 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $key = Key::where('user_id', 1)->first();
+            $rsa = new RSA\Encryption($key->private_key, $key->public_key);
+
+            $newQuestion = new Question();
+            $newQuestion->subject_id    = $request->subject_id;
+            $newQuestion->question      = $rsa->publicEncrypt($request->question);
+            $newQuestion->option1       = $rsa->publicEncrypt($request->option1);
+            $newQuestion->option2       = $rsa->publicEncrypt($request->option2);
+            $newQuestion->option3       = $rsa->publicEncrypt($request->option3);
+            $newQuestion->option4       = $rsa->publicEncrypt($request->option4);
+            $newQuestion->marks         = $request->marks;
+            $newQuestion->save();
+
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false, 'new' => 'something went wrong'], 400);
+        }
     }
 
     /**
