@@ -8,9 +8,17 @@ use App\Question;
 use App\Helper as RSA;
 use App\Key;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\TryCatch;
 
 class QuestionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -105,6 +113,12 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $delete = Question::where('id', $id)->delete();
+
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false], 200);
+        }
     }
 }

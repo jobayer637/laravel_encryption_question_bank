@@ -38,16 +38,25 @@
                                 </div>
                                 <div class="card-body">
                                     @foreach ($subject->questions as $question)
-                                       <div class="list-group rounded-0 mb-2">
-                                            <button type="button" class="list-group-item list-group-item-action active">
-                                                {{-- {{ $question->question }} --}}
-                                                {!! $rsa->privDecrypt($question->question) !!}
-                                            </button>
-                                            <button type="button" class="list-group-item list-group-item-action">{{ $rsa->privDecrypt($question->option1) }}</button>
-                                            <button type="button" class="list-group-item list-group-item-action">{{ $rsa->privDecrypt($question->option2) }}</button>
-                                            <button type="button" class="list-group-item list-group-item-action">{{ $rsa->privDecrypt($question->option3) }}</button>
-                                            <button type="button" class="list-group-item list-group-item-action">{{ $rsa->privDecrypt($question->option4) }}</button>
+                                    <div class="card rounded-0">
+                                        <div class="card-header">
+                                           <div class="d-flex justify-content-between">
+                                                <div class="text-capitalize">{!! $rsa->privDecrypt($question->question) !!}</div>
+                                                <div>
+                                                    <button data-url="{{ route('question.destroy',$question->id) }}" class="deleteQuestion btn btn-danger btn-sm rounded-0">Delete</button>
+                                                </div>
+                                           </div>
                                         </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item text-capitalize">(A). &nbsp; {{ $rsa->privDecrypt($question->option1) }}</li>
+                                                <li class="list-group-item text-capitalize">(B). &nbsp; {{ $rsa->privDecrypt($question->option2) }}</li>
+                                                <li class="list-group-item text-capitalize">(C). &nbsp; {{ $rsa->privDecrypt($question->option3) }}</li>
+                                                <li class="list-group-item text-capitalize">(D). &nbsp; {{ $rsa->privDecrypt($question->option4) }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
                                     @endforeach
                                 </div>
                             </div>
@@ -61,5 +70,28 @@
 
 
 @push('js')
+   <script>
+       $(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    });
 
+       $(document).on('click', '.deleteQuestion', function(){
+           let url = $(this).data('url')
+           $.ajax({
+                type:'delete',
+                url: url,
+                success:function(response) {
+                    if (response.success) {
+                        location.reload()
+                    } else {
+                        alert('something went wrong!!')
+                    }
+                },
+            });
+       })
+   </script>
 @endpush
