@@ -15,9 +15,14 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('manage_question_id')->index();
-            $table->longText('question');
+            $table->unsignedBigInteger('subject_id')->index();
+            $table->text('question');
+            $table->text('option1');
+            $table->text('option2');
+            $table->text('option3');
+            $table->text('option4');
             $table->integer('marks');
+            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->timestamps();
         });
     }
