@@ -1,8 +1,11 @@
 @extends('custom_layouts.app')
 
+@push('css')
+@endpush
+
 @section('content')
     <div class="container">
-        <div class="card">
+        <div class="card" style="background-color: rgba(10,110,0,.2)">
             <div class="card-header">
                 Register page
             </div>

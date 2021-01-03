@@ -27,6 +27,15 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                @if(Auth::check() && Auth::user()->role_id==1)
+                    <a class="navbar-brand" href="{{ route('admin.index') }}">Dashboard</a>
+                @endif
+                @if(Auth::check() && Auth::user()->role_id==2)
+                    <a class="navbar-brand" href="{{ route('moderator.index') }}">Dashboard</a>
+                @endif
+                @if(Auth::check() && Auth::user()->role_id==3)
+                    <a class="navbar-brand" href="{{ route('author.index') }}">Dashboard</a>
+                @endif
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

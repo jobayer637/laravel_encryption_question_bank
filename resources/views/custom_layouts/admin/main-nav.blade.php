@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header sticky-top">
         <nav class="navbar">
           <!-- Search Box-->
           <div class="search-box">
@@ -75,7 +75,9 @@
                   </ul>
                 </li>
                 <!-- Logout    -->
-                <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li>
+                {{-- <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a></li> --}}
+                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out"></i></a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"> @csrf </form>
               </ul>
             </div>
           </div>

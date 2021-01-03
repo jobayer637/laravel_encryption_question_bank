@@ -26,4 +26,18 @@ Route::post('/custor-register-create', 'RegisterController@registerCreate')->nam
 Route::resource('/question', 'QuestionController');
 
 
-Route::get('admin/dashboard', 'AdminDashboardController@index')->name('index');
+
+
+Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
+    Route::get('dashboard', 'AdminDashboardController@index')->name('index');
+    Route::resource('question', 'AdminQuestionController');
+    Route::resource('subject', 'AdminSubjectController');
+});
+
+Route::group(['as' => 'author.', 'prefix' => 'author', 'middleware' => ['auth', 'author']], function () {
+    Route::get('dashboard', 'AuthorDashboardController@index')->name('index');
+});
+
+Route::group(['as' => 'moderator.', 'prefix' => 'moderator', 'middleware' => ['auth', 'moderator']], function () {
+    Route::get('dashboard', 'ModeratorDashboardController@index')->name('index');
+});

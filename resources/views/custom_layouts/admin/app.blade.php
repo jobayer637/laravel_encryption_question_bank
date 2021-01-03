@@ -34,6 +34,9 @@
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}">
 
+    {{-- swal --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+
     {{-- end admin panel --}}
     @stack('css')
 </head>
@@ -77,6 +80,8 @@
     <script src="{{ asset('assets/js/front.js') }}"></script>
     {{-- end admin panel --}}
 
+    {{-- swal --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
     @stack('js')
 </body>
 </html>
