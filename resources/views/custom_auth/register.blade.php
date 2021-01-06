@@ -28,6 +28,20 @@
                             </div>
                         </div>
 
+                         <div class="form-group row">
+                            <label for="institute" class="col-md-4 col-form-label text-md-right">{{ __('Select Institute') }}</label>
+
+                            <div class="col-md-6">
+                               <select id="inputState" name="institute" class="form-control">
+                                    <option selected value="">Choose...</option>
+                                    @foreach ($institutes as $institute)
+                                        <option value="{{ $institute->id }}">{{ $institute->name }}</option>
+                                    @endforeach
+                                </select>
+                                <small class="text-danger" id="instituteMsg"></small>
+                            </div>
+                        </div>
+
                         <div class="form-group row">
                             <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
 
@@ -193,13 +207,15 @@
             dataType: "JSON",
             data:data,
             beforeSend: function() {
-                 $("#nameMsg ,#emailMsg, #ageMsg, #phoneMsg, #aboutMsg, #passwordMsg, #addressMsg, #imageMsg").text('')
+                 $("#nameMsg ,#emailMsg, #ageMsg, #phoneMsg, #aboutMsg, #passwordMsg, #addressMsg, #imageMsg, #instituteMsg").text('')
             },
             success: function(response){
                 if(response.success){
-                    alert('new users added')
-                } else {
-                    console.log(response.errors)
+                    swal("Done!", 'Successfully Deleted', "success")
+                    .then(()=>{location.reload()})
+                }
+                else {
+                     console.log(response.errors)
                     if(response.errors.name) {
                         $("#nameMsg").text(response.errors.name)
                     }
@@ -218,7 +234,9 @@
                     if(response.errors.password[response.errors.password.length-1]) {
                         $("#passwordMsg").text(response.errors.password[response.errors.password.length-1])
                     }
-                    // console.log(response.errors.phone[response.errors.phone.length-1])
+                    if(response.errors.institute) {
+                        $("#instituteMsg").text(response.errors.institute)
+                    }
                 }
 
             }

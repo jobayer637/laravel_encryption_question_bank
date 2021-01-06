@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Institute;
 
-class AdminUserController extends Controller
+class AdminInstituteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['role', 'institute'])->get();
-        return view('admin.user.index', compact('users'));
+        $institutes = Institute::get();
+        return view('admin.institute.index',  compact('institutes'));
     }
 
     /**
@@ -47,8 +47,7 @@ class AdminUserController extends Controller
      */
     public function show($id)
     {
-        $user = User::with(['role', 'institute'])->find($id);
-        return view('admin.user.show', compact('user'));
+        //
     }
 
     /**
@@ -71,14 +70,7 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $data = $request->except(['_token']);
-            $update = User::where('id', $id)->update($data);
-
-            return response()->json(['success' => true], 200);
-        } catch (\Exception $ex) {
-            return response()->json(['success' => false], 200);
-        }
+        //
     }
 
     /**
@@ -89,12 +81,6 @@ class AdminUserController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $delete = User::where('id', $id)->delete();
-
-            return response()->json(['success' => true], 200);
-        } catch (\Exception $ex) {
-            return response()->json(['success' => false], 200);
-        }
+        //
     }
 }

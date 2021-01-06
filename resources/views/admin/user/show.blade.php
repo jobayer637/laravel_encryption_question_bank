@@ -35,10 +35,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card">
+               <div class="card-header"><div class="badge badge-danger">Update Role</div></div>
+               <div class="card-body">
+                    <form id="userStatus" action="{{ route('admin.users.update', $user->id) }}" >
+                        @csrf
+                        <div class="input-group">
+                            <select id="inputState" name="role_id" class="form-control">
+                                <option value="2" {{ $user->role_id==2?'selected':'' }}>Moderator</option>
+                                <option value="3" {{ $user->role_id==3? 'selected':'' }}>Author</option>
+                            </select>
+                            <button type="submit" class="btn btn-danger rounded-0 px-5 disabled"><i class="fas {{ $user->role_id==2? 'fa-unlock':'fa-lock' }}"></i></button>
+                        </div>
+                    </form>
+               </div>
+           </div>
        </div>
        <div class="col-md-6">
            <div class="card">
-               <div class="card-header"><div class="badge badge-danger">Status</div></div>
+               <div class="card-header"><div class="badge badge-danger">Update Status</div></div>
                <div class="card-body">
                     <form id="userStatus" action="{{ route('admin.users.update', $user->id) }}" >
                         @csrf
@@ -47,14 +63,14 @@
                                 <option value="1" {{ $user->status==1?'selected':'' }}>Approved</option>
                                 <option value="0" {{ $user->status==0? 'selected':'' }}>Pending</option>
                             </select>
-                            <button type="submit" class="btn btn-primary rounded-0 px-3 disabled">Update</button>
+                            <button type="submit" class="btn btn-danger rounded-0 px-5 disabled"><i class="fas {{ $user->status? 'fa-unlock':'fa-lock' }}"></i></button>
                         </div>
                     </form>
                </div>
            </div>
 
            <div class="card">
-               <div class="card-header"><div class="badge badge-danger">Permission</div></div>
+               <div class="card-header"><div class="badge badge-danger">Update Permission</div></div>
                <div class="card-body">
                     <form id="userPermission" action="{{ route('admin.users.update', $user->id) }}" >
                         @csrf
@@ -63,7 +79,7 @@
                                 <option value="1" {{ $user->permission==1?'selected':'' }}>Permitted</option>
                                 <option value="0" {{ $user->permission==0? 'selected':'' }}>Not Permit</option>
                             </select>
-                            <button type="submit" class="btn btn-primary rounded-0 px-3 disabled">Update</button>
+                            <button type="submit" class="btn btn-danger rounded-0 px-5 disabled"><i class="fas {{ $user->permission? 'fa-unlock':'fa-lock' }}"></i></button>
                         </div>
                     </form>
                </div>

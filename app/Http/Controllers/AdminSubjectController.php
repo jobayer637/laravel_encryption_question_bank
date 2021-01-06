@@ -61,7 +61,9 @@ class AdminSubjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $subject = Subject::with('department')->find($id);
+        $departments = Department::get();
+        return view('admin.subject.show', compact('subject', 'departments'));
     }
 
     /**
@@ -84,7 +86,14 @@ class AdminSubjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $data = $request->except(['_token']);
+            Subject::where('id', $id)->update($data);
+
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false], 200);
+        }
     }
 
     /**

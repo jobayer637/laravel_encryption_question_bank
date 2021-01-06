@@ -15,11 +15,15 @@ class CreateInstitutesTable extends Migration
     {
         Schema::create('institutes', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('board_id');
+            $table->integer('district_id');
+            $table->integer('thana_id');
+            $table->string('name')->unique();
             $table->string('slug');
             $table->string('address');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('code');
+            $table->boolean('status')->default(false);
             $table->boolean('permission')->default(0);
             $table->timestamp('countDown');
             $table->timestamps();

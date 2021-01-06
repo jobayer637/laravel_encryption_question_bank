@@ -33,10 +33,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'a
     Route::resource('question', 'AdminQuestionController');
     Route::resource('subject', 'AdminSubjectController');
     Route::resource('users', 'AdminUserController');
+    Route::resource('institutes', 'AdminInstituteController');
 });
 
 Route::group(['as' => 'author.', 'prefix' => 'author', 'middleware' => ['auth', 'author']], function () {
     Route::get('dashboard', 'AuthorDashboardController@index')->name('index');
+    Route::resource('question', 'AuthorQuestionController');
 });
 
 Route::group(['as' => 'moderator.', 'prefix' => 'moderator', 'middleware' => ['auth', 'moderator']], function () {

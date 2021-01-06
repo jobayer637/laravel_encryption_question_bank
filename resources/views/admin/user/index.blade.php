@@ -36,6 +36,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
+                <th>Institute</th>
                 <th>Status</th>
                 <th>Permission</th>
                 <th>Active</th>
@@ -47,6 +48,7 @@
                 <th>{{ $user->name }}</th>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->role->name }}</td>
+                <td>{{ $user->institute->name }}</td>
                 <td><div class="badge badge-warning">{{ $user->status==true?'active':'deactive' }}</div></td>
                 <td><div class="badge badge-danger">{{ $user->permission==true?'permitted': 'not permit' }}</div></td>
                 <td>

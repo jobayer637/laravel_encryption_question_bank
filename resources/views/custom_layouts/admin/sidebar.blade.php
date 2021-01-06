@@ -10,10 +10,11 @@
           <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
           @if(Request::is('admin*'))
             <ul class="list-unstyled">
-                <li class="{{ Request::is('admin/dashboard')?'active':'' }}"><a href="{{ route('admin.index') }}"> <i class="icon-home"></i>Home </a></li>
-                <li class="{{ Request::is('admin/users*')?'active':'' }}"><a href="{{ route('admin.users.index') }}"> <i class="icon-user"></i>Users </a></li>
-                <li class="{{ Request::is('admin/subject*')?'active':'' }}"><a href="{{ route('admin.subject.index') }}"> <i class="icon-home"></i>Subject </a></li>
-                <li class="{{ Request::is('admin/question*')?'active':'' }}"><a href="{{ route('admin.question.index') }}"> <i class="icon-home"></i>Question </a></li>
+                <li class="{{ Request::is('admin/dashboard')?'active':'' }}"><a href="{{ route('admin.index') }}"> <i class="fas fa-house-user"></i>Home </a></li>
+                <li class="{{ Request::is('admin/users*')?'active':'' }}"><a href="{{ route('admin.users.index') }}"> <i class="fas fa-user-tie"></i>Users </a></li>
+                <li class="{{ Request::is('admin/institute*')?'active':'' }}"><a href="{{ route('admin.institutes.index') }}"> <i class="fas fa-university"></i>Institutes </a></li>
+                <li class="{{ Request::is('admin/subject*')?'active':'' }}"><a href="{{ route('admin.subject.index') }}"> <i class="fas fa-book"></i>Subject </a></li>
+                <li class="{{ Request::is('admin/question*')?'active':'' }}"><a href="{{ route('admin.question.index') }}"> <i class="fas fa-newspaper"></i>Question </a></li>
             </ul>
           @endif
 
@@ -26,6 +27,7 @@
            @if(Request::is('author*'))
             <ul class="list-unstyled">
                 <li class="{{ Request::is('author/dashboard')?'active':'' }}"><a href="{{ route('author.index') }}"> <i class="icon-home"></i>Home </a></li>
+                <li class="{{ Request::is('author/question*')?'active':'' }}"><a href="{{ route('author.question.index') }}"> <i class="fas fa-newspaper"></i>Question </a></li>
             </ul>
           @endif
 

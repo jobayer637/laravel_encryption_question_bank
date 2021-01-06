@@ -42,8 +42,29 @@
                                 <div class="card-header">
                                    <div class="d-flex justify-content-between">
                                        <div> <h4>{{ $subject->name }} Question  [total question: {{ count($subject->questions) }}] </h4></div>
-                                       <div>
-                                            <a href="{{ route('admin.question.create', ['subject_id'=> $subject->id]) }}" class="btn btn-sm btn-warning rounded-0">Add New Question</a>
+                                       <div class="d-flex justify-content-between">
+                                           <form id="userStatus" action="{{ route('admin.subject.update', $subject->id) }}" class="mr-3">
+                                                @csrf
+                                                <div class="input-group">
+                                                    <select id="inputState" name="status" class="form-control">
+                                                        <option value="1" {{ $subject->status==1?'selected':'' }}>Approved</option>
+                                                        <option value="0" {{ $subject->status==0? 'selected':'' }}>Pending</option>
+                                                    </select>
+                                                    <button type="submit" class="btn btn-primary rounded-0 disabled"><i class="fas {{ $subject->status? 'fa-unlock':'fa-lock' }}"></i></button>
+                                                </div>
+                                            </form>
+
+                                           <form id="userPermission" action="{{ route('admin.subject.update', $subject->id) }}" >
+                                                @csrf
+                                                <div class="input-group">
+                                                    <select id="inputState" name="permission" class="form-control">
+                                                        <option value="1" {{ $subject->permission==1?'selected':'' }}>Permitted</option>
+                                                        <option value="0" {{ $subject->permission==0? 'selected':'' }}>Not Permit</option>
+                                                    </select>
+                                                    <button type="submit" class="btn btn-primary rounded-0 disabled"><i class="fas {{ $subject->permission? 'fa-unlock':'fa-lock' }}"></i></button>
+                                                </div>
+                                            </form>
+                                            <a href="{{ route('admin.question.create', ['subject_id'=> $subject->id]) }}" class="btn btn-sm btn-warning rounded-0 ml-3">Add New Question</a>
                                        </div>
                                    </div>
                                 </div>
@@ -124,4 +145,43 @@
         })
     })
    </script>
+
+
+<script>
+    // User permission
+    $(document).on('submit', '#userPermission', function(event){
+        event.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'PUT',
+            data: $(this).serializeArray(),
+            success: function(response){
+                if (response.success) {
+                    swal("Done!", 'Successfully Updated', "success")
+                    .then(()=>{location.reload()})
+                } else {
+                    swal("Error!", 'Something went wrong', "error")
+                }
+            }
+        })
+    })
+
+    // User Status
+    $(document).on('submit', '#userStatus', function(event){
+        event.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'PUT',
+            data: $(this).serializeArray(),
+            success: function(response){
+                if (response.success) {
+                    swal("Done!", 'Successfully Updated', "success")
+                    .then(()=>{location.reload()})
+                } else {
+                    swal("Error!", 'Something went wrong', "error")
+                }
+            }
+        })
+    })
+</script>
 @endpush

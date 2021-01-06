@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Key;
+use App\Institute;
 use PhpParser\Node\Expr\AssignOp\Concat;
 
 use App\Http\Controllers\Controller;
@@ -24,7 +25,8 @@ class RegisterController extends Controller
 
     public function register()
     {
-        return view('custom_auth.register');
+        $institutes = Institute::select('id', 'name')->get();
+        return view('custom_auth.register', compact('institutes'));
     }
 
     public function registerCreate(Request $request)
@@ -36,6 +38,7 @@ class RegisterController extends Controller
             'about' => ['min:10', 'string', 'max:500'],
             'phone' => ['required', 'unique:users', 'max:11', 'min:11'],
             'age' => ['required', 'min:1', 'max:3'],
+            'institute' => ['required', 'min:1'],
         ]);
 
         if ($validator->fails()) {
@@ -50,6 +53,7 @@ class RegisterController extends Controller
 
             $newUser = new User();
             $newUser->role_id = 2;
+            $newUser->institute_id = $data['institute'];
             $newUser->name = $data['name'];
             $newUser->email = $data['email'];
             $newUser->phone = $data['phone'];
