@@ -29,7 +29,9 @@
                     <th scope="col">S/L</th>
                     <th scope="col">Subject Name</th>
                     <th scope="col">Department</th>
-                    <th scope="col">Create Date</th>
+                    <th scope="col">Updated</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Permission</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -40,9 +42,13 @@
                         <th>{{ $key+1 }}</th>
                         <td>{{ $subject->name }}</td>
                         <td>{{ $subject->department->name }}</td>
-                        <td> {{ Carbon::parse($subject->created_at)->format('d-m-Y') }}</td>
+                        <td>{{ Carbon::parse($subject->updated_at == NULL? $subject->created_at: $subject->updated_at)->format('d-m-Y') }}</td>
+                        <td><div class="badge badge-warning">{{ $subject->status==true?'active':'deactive' }}</div></td>
+                        <td><div class="badge badge-danger">{{ $subject->permission==true?'permitted': 'not permit' }}</div></td>
                         <td>
-                            <button id="deleteQuestion" data-url="{{ route('admin.subject.destroy', $subject->id) }}" class="btn btn-sm rounded-0 btn-primary">Delete</button>
+                            <button class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
+                            <button id="deleteQuestion" data-url="{{ route('admin.subject.destroy', $subject->id) }}" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>
                @endforeach
@@ -85,7 +91,7 @@
 
 
 @push('js')
- 
+
 <script>
     $(function(){
         $.ajaxSetup({

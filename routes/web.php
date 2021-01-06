@@ -32,6 +32,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'a
     Route::get('dashboard', 'AdminDashboardController@index')->name('index');
     Route::resource('question', 'AdminQuestionController');
     Route::resource('subject', 'AdminSubjectController');
+    Route::resource('users', 'AdminUserController');
 });
 
 Route::group(['as' => 'author.', 'prefix' => 'author', 'middleware' => ['auth', 'author']], function () {

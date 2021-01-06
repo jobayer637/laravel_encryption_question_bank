@@ -19,6 +19,8 @@ class CreateSubjectsTable extends Migration
             $table->string('name')->unique();
             $table->string('slug');
             $table->string('code');
+            $table->boolean('status')->default(false);
+            $table->boolean('permission')->default(false);
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
             $table->timestamps();
         });

@@ -22,6 +22,7 @@ class CreateQuestionsTable extends Migration
             $table->text('option3');
             $table->text('option4');
             $table->integer('marks');
+            $table->boolean('status')->default(false);
             $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $table->timestamps();
         });

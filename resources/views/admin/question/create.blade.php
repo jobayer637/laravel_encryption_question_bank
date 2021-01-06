@@ -68,7 +68,9 @@
                             <div class="d-flex justify-content-between">
                                 <div class="text-capitalize text-left float-left text-bold"><span>Q{{ $key+1 }}.</span>  <span>{!! $rsa->privDecrypt($question->question) !!}</span></div>
                                 <div>
-                                    <button data-url="{{ route('admin.question.destroy',$question->id) }}" class="deleteQuestion btn btn-danger btn-sm rounded-0">Delete</button>
+                                    <button class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
+                                    <button data-url="{{ route('question.destroy',$question->id) }}" class="deleteQuestion btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                                 </div>
                             </div>
                         </div>

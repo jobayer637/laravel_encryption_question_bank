@@ -33,9 +33,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <!-- Favicon-->
     <link rel="shortcut icon" href="{{ asset('assets/img/favicon.ico') }}">
-
     {{-- swal --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+
 
     {{-- end admin panel --}}
     @stack('css')
@@ -72,6 +72,7 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/fontawesome.js') }}"></script>
     {{-- admin panel --}}
     <!-- JavaScript files-->
     <script src="{{ asset('assets/vendor/popper.js/umd/popper.min.js') }}"> </script>
@@ -82,6 +83,7 @@
 
     {{-- swal --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+
     @stack('js')
 </body>
 </html>
