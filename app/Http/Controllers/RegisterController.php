@@ -67,7 +67,7 @@ class RegisterController extends Controller
 
 
             $newUser = new User();
-            $newUser->role_id = 2;
+            $newUser->role_id = 3;
             $newUser->institute_id = $data['institute'];
             $newUser->name = $data['name'];
             $newUser->email = $data['email'];

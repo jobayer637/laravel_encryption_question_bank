@@ -36,6 +36,9 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'a
     Route::resource('institutes', 'AdminInstituteController');
     Route::resource('board', 'AdminBoardController');
     Route::resource('department', 'AdminDepartmentController');
+    Route::get('districts', 'AdminAjaxController@districts')->name('districts');
+    Route::get('upazilas', 'AdminAjaxController@upazilas')->name('upazilas');
+    Route::get('unions', 'AdminAjaxController@unions')->name('unions');
 });
 
 Route::group(['as' => 'author.', 'prefix' => 'author', 'middleware' => ['auth', 'author']], function () {

@@ -25,4 +25,13 @@ class Institute extends Model
     {
         return $this->belongsTo('App\Thana');
     }
+
+    public function upazila()
+    {
+        return $this->belongsTo('App\Upazila');
+    }
+    public function union()
+    {
+        return $this->belongsTo('App\Union');
+    }
 }

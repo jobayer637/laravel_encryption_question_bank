@@ -25,8 +25,11 @@
         </div>
     </div>
 
-    <div class="card-header d-flex align-items-center">
-        <h3 class="h4">institute Management</h3>
+    <div class="card-header d-flex justify-content-between">
+       <div> <h3 class="h4">institute Management</h3></div>
+        <div class="mr-5">
+            <a href="{{ route('admin.institutes.create') }}" class="btn btn-outline-warning btn-sm rounded-0">Add New Institute</a>
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -52,7 +55,7 @@
                 <td>{{ $institute->email }}</td>
                 <td>{{ $institute->board->name }}</td>
                 <td>{{ $institute->district->name }}</td>
-                <td>{{ $institute->thana->name }}</td>
+                <td>{{ $institute->upazila->name }}</td>
                 <td><div class="badge badge-warning">{{ $institute->status==true?'active':'deactive' }}</div></td>
                 <td><div class="badge badge-danger">{{ $institute->permission==true?'permitted': 'not permit' }}</div></td>
                 <td>
