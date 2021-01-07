@@ -33,8 +33,6 @@
                         <a class="nav-link rounded-0" id="v-pills-profile-tab-{{ $subject->id }}" data-toggle="pill" href="#v-pills-profile-{{ $subject->id }}" role="tab" aria-controls="v-pills-profile" aria-selected="false">
                             {{ $subject->name }}
                         </a>
-                    @else
-                        <h3 class="p-5"><div class="badge badge-info">No Question Available Right Now</div></h3>
                     @endif
                     @endforeach
                 </div>
@@ -92,46 +90,5 @@
 
 
 @push('js')
-   <script>
-    $(function(){
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    });
 
-    $(document).on('click', '.deleteQuestion', function(){
-        let url = $(this).data('url')
-         swal({
-            title: "Delete?",
-            text: "Please ensure and then confirm!",
-            type: "warning",
-            showCancelButton: !0,
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel!",
-            reverseButtons: !0
-        }).then(function (e) {
-            if (e.value === true) {
-                $.ajax({
-                    type: 'DELETE',
-                    url: url,
-                    success: function (response) {
-                        console.log(response)
-                        if (response.success) {
-                            swal("Done!", 'Successfully Deleted', "success")
-                            .then(()=>{location.reload()})
-                        } else {
-                            swal("Error!", 'Something went wrong', "error")
-                        }
-                    }
-                });
-            } else {
-                e.dismiss;
-            }
-        }, function (dismiss) {
-            return false;
-        })
-    })
-   </script>
 @endpush

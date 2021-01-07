@@ -23,7 +23,7 @@
             <div class="card mb-3">
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                    <img src="{{ $user->image }}" class="card-img" alt="...">
+                    <img src="{{ asset($user->image) }}" class="card-img" alt="...">
                     </div>
                     <div class="col-md-8">
                     <div class="card-body">
@@ -36,6 +36,7 @@
                 </div>
             </div>
 
+            @if($user->role_id !=1)
             <div class="card">
                <div class="card-header"><div class="badge badge-danger">Update Role</div></div>
                <div class="card-body">
@@ -51,6 +52,8 @@
                     </form>
                </div>
            </div>
+           @endif
+
        </div>
        <div class="col-md-6">
            <div class="card">

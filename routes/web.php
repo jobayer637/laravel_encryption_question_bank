@@ -34,6 +34,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'a
     Route::resource('subject', 'AdminSubjectController');
     Route::resource('users', 'AdminUserController');
     Route::resource('institutes', 'AdminInstituteController');
+    Route::resource('board', 'AdminBoardController');
+    Route::resource('department', 'AdminDepartmentController');
 });
 
 Route::group(['as' => 'author.', 'prefix' => 'author', 'middleware' => ['auth', 'author']], function () {

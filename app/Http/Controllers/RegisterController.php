@@ -13,7 +13,10 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+// use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManagerStatic as Image;
 
 
 class RegisterController extends Controller
@@ -42,14 +45,26 @@ class RegisterController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()], 200);
-            return redirect('custom_auth/register')
+            return redirect('custor-register')
                 ->withErrors($validator)
                 ->withInput();
         }
 
         try {
+            $image = $request->file('image');
+            $demoName = Str::random(20) . time();
+            $extension = $image->getClientOriginalExtension();
+            $name = $demoName . '.' . $extension;
+
+            if (!Storage::disk('public')->exists('images/profile')) {
+                Storage::disk('public')->makeDirectory('images/profile');
+            }
+            $profileImage = Image::make($image)->resize(300, 300)->save('foo');
+            Storage::disk('public')->put('images/profile/' . $name, $profileImage);
+            $path = 'storage/images/profile/' . $name;
+
             $data = $request->except(['_token', 'password_confirmation']);
+
 
             $newUser = new User();
             $newUser->role_id = 2;
@@ -60,6 +75,7 @@ class RegisterController extends Controller
             $newUser->address = $data['address'];
             $newUser->age = $data['age'];
             $newUser->about = $data['about'];
+            $newUser->image = $path;
             $newUser->status = false;
             $newUser->password = Hash::make($data['password']);
             $newUser->save();
@@ -70,9 +86,11 @@ class RegisterController extends Controller
             $newkey->public_key = $data['pu_key'];
             $newkey->save();
 
-            return response()->json(['success' => true], 200);
+            return redirect()->route('login');
+            // return response()->json(['success' => true], 200);
         } catch (\Exception $ex) {
-            return response()->json(['success' => false], 200);
+            // return response()->json(['success' => false], 200);
+            return back();
         }
     }
 }

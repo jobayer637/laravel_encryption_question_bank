@@ -10,4 +10,9 @@ class Board extends Model
     {
         return $this->hasMany('App\Institute');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

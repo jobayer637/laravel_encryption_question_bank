@@ -47,7 +47,18 @@ class User extends Authenticatable
         return $this->belongsTo('App\Key');
     }
 
-    public function institute(){
+    public function institute()
+    {
         return $this->belongsTo('App\Institute');
+    }
+
+    public function boards()
+    {
+        return $this->hasMany('App\Board');
+    }
+
+    public function departments()
+    {
+        return $this->hasMany('App\Department');
     }
 }
