@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'address' => 'Dhaka',
             'age' => 21,
             'status' => 1,
-            'image' => 'profile.jpg',
+            'image' => 'https://twitter.com/Jobayer01219676/photo',
             'permission' => 1,
             'about' => 'This is jobayer hossain',
             'email' => 'web.jobayer@gmail.com',

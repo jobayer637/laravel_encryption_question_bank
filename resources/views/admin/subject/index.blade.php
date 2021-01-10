@@ -21,7 +21,10 @@
 <div class="row">
     <div class="col-md-8">
         <div class="card rounded-0">
-    <div class="card-header"><h4>All Subjects [{{ count($subjects) }}] </h4></div>
+    <div class="card-header d-flex justify-content-between">
+        <h4>All Subjects [{{ count($subjects) }}] </h4>
+        <input type="text" id="searchValue" class="form-control col-md-4" placeholder="Search Here .... ">
+    </div>
     <div class="card-body">
         <table class="table table-hover">
             <thead>
@@ -38,13 +41,13 @@
             <tbody>
                @foreach ($subjects as $key => $subject)
 
-                     <tr>
+                     <tr class="filterData">
                         <th>{{ $key+1 }}</th>
                         <td>{{ $subject->name }}</td>
                         <td>{{ $subject->department->name }}</td>
                         <td>{{ Carbon::parse($subject->updated_at == NULL? $subject->created_at: $subject->updated_at)->format('d-m-Y') }}</td>
-                        <td><div class="badge {{ $subject->status==true?'badge-warning':'' }}">{{ $subject->status==true?'active':'deactive' }}</div></td>
-                        <td><div class="badge {{ $subject->permission==true?'badge-danger':'' }}">{{ $subject->permission==true?'permitted': 'not permit' }}</div></td>
+                        <td><span class="badge {{ $subject->status==true?'badge-warning':'' }}">{{ $subject->status==true?'active':'blocked' }}</span></td>
+                        <td><span class="badge {{ $subject->permission==true?'badge-danger':'' }}">{{ $subject->permission==true?'permitted': 'not permit' }}</span></td>
                         <td>
                             <a href="{{ route('admin.subject.show', $subject->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
                             <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
@@ -155,5 +158,18 @@
         })
 
     })
+</script>
+
+{{-- Search value --}}
+<script>
+    $( document ).ready(function() {
+        let filter = document.getElementsByClassName("filterData");
+        $(document).on('keyup', '#searchValue', function(){
+            let value = $(this).val().toLowerCase()
+            $("tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        })
+    });
 </script>
 @endpush

@@ -28,7 +28,10 @@
     <div class="card-header d-flex justify-content-between">
        <div> <h3 class="h4">institute Management</h3></div>
         <div class="mr-5">
-            <a href="{{ route('admin.institutes.create') }}" class="btn btn-outline-warning btn-sm rounded-0">Add New Institute</a>
+            <div class="d-flex justify-content-end">
+                <input type="text" id="searchValue" class="form-control col-md-6 mr-2" placeholder="Search Here .... ">
+                <a href="{{ route('admin.institutes.create') }}" class="btn btn-outline-warning btn-sm rounded-0">Add New Institute</a>
+            </div>
         </div>
     </div>
     <div class="card-body">
@@ -84,7 +87,16 @@
     });
 </script>
 
+{{-- Search value --}}
 <script>
-
+    $( document ).ready(function() {
+        let filter = document.getElementsByClassName("filterData");
+        $(document).on('keyup', '#searchValue', function(){
+            let value = $(this).val().toLowerCase()
+            $("tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        })
+    });
 </script>
 @endpush

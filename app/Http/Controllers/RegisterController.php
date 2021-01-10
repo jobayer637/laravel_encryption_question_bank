@@ -6,16 +6,11 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Key;
 use App\Institute;
-use PhpParser\Node\Expr\AssignOp\Concat;
-
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-// use Intervention\Image\Facades\Image;
 use Intervention\Image\ImageManagerStatic as Image;
 
 
@@ -34,15 +29,22 @@ class RegisterController extends Controller
 
     public function registerCreate(Request $request)
     {
+        $inst_emial = Institute::where('email', $request->email);
         $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'about' => ['min:10', 'string', 'max:500'],
-            'phone' => ['required', 'unique:users', 'max:11', 'min:11'],
-            'age' => ['required', 'min:1', 'max:3'],
+            'name'      => ['required', 'string', 'max:255'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'string', 'min:6', 'confirmed'],
+            'about'     => ['min:10', 'string', 'max:500'],
+            'phone'     => ['required', 'unique:users', 'max:11', 'min:11'],
+            'age'       => ['required', 'min:1', 'max:3'],
             'institute' => ['required', 'min:1'],
         ]);
+
+        $validator->after(function ($validator) use ($request) {
+            if (!Institute::where('email', $request->email)->first()) {
+                $validator->errors()->add('email', 'Email Not matched with institute email');
+            }
+        });
 
         if ($validator->fails()) {
             return redirect('custor-register')
@@ -51,11 +53,12 @@ class RegisterController extends Controller
         }
 
         try {
-            $image = $request->file('image');
-            $demoName = Str::random(20) . time();
-            $extension = $image->getClientOriginalExtension();
-            $name = $demoName . '.' . $extension;
+            $data       = $request->except(['_token', 'password_confirmation']);
 
+            $image      = $request->file('image');
+            $demoName   = Str::random(20) . time();
+            $extension  = $image->getClientOriginalExtension();
+            $name       = $demoName . '.' . $extension;
             if (!Storage::disk('public')->exists('images/profile')) {
                 Storage::disk('public')->makeDirectory('images/profile');
             }
@@ -63,27 +66,24 @@ class RegisterController extends Controller
             Storage::disk('public')->put('images/profile/' . $name, $profileImage);
             $path = 'storage/images/profile/' . $name;
 
-            $data = $request->except(['_token', 'password_confirmation']);
-
-
-            $newUser = new User();
-            $newUser->role_id = 3;
-            $newUser->institute_id = $data['institute'];
-            $newUser->name = $data['name'];
-            $newUser->email = $data['email'];
-            $newUser->phone = $data['phone'];
-            $newUser->address = $data['address'];
-            $newUser->age = $data['age'];
-            $newUser->about = $data['about'];
-            $newUser->image = $path;
-            $newUser->status = false;
-            $newUser->password = Hash::make($data['password']);
+            $newUser                = new User();
+            $newUser->role_id       = 3;
+            $newUser->institute_id  = $data['institute'];
+            $newUser->name          = $data['name'];
+            $newUser->email         = $data['email'];
+            $newUser->phone         = $data['phone'];
+            $newUser->address       = $data['address'];
+            $newUser->age           = $data['age'];
+            $newUser->about         = $data['about'];
+            $newUser->image         = $path;
+            $newUser->status        = false;
+            $newUser->password      = Hash::make($data['password']);
             $newUser->save();
 
-            $newkey = new Key();
-            $newkey->user_id = $newUser->id;
-            $newkey->private_key = $data['pr_key'];
-            $newkey->public_key = $data['pu_key'];
+            $newkey                 = new Key();
+            $newkey->user_id        = $newUser->id;
+            $newkey->private_key    = $data['pr_key'];
+            $newkey->public_key     = $data['pu_key'];
             $newkey->save();
 
             return redirect()->route('login');

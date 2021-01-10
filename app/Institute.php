@@ -16,6 +16,11 @@ class Institute extends Model
         return $this->belongsTo('App\Board');
     }
 
+    public function division()
+    {
+        return $this->belongsTo('App\Division');
+    }
+
     public function district()
     {
         return $this->belongsTo('App\District');

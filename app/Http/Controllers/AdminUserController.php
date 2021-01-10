@@ -48,7 +48,11 @@ class AdminUserController extends Controller
     public function show($id)
     {
         $user = User::with(['role', 'institute'])->find($id);
-        return view('admin.user.show', compact('user'));
+        if ($user->role_id == 1) {
+            return back();
+        } else {
+            return view('admin.user.show', compact('user'));
+        }
     }
 
     /**

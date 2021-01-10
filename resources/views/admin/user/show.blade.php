@@ -29,7 +29,10 @@
                     <div class="card-body">
                         <h5 class="card-title text-capitalize">{{ $user->name }}</h5>
                         <h6 class="card-title">{{ $user->email }}</h6>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        {{-- <p class="card-text">{{ $user->about }}</p> --}}
+                        <p class="card-text">{{ $user->institute->name }}</p>
+                        <p class="card-text">{{ $user->institute->board->name }} Board</p>
+                        <p class="card-text">{{ $user->institute->division->name }}, {{ $user->institute->district->name }}, {{ $user->institute->upazila->name }}, {{ $user->institute->union->name }}</p>
                         <p class="card-text"><small class="text-muted">{{ Carbon::parse($user->created_at)->format('d-m-Y') }}</small></p>
                     </div>
                     </div>

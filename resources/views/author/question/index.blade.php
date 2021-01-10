@@ -29,7 +29,7 @@
                 <div class="card rounded-0">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     @foreach ($subjects as $subject)
-                    @if($subject->permission)
+                    @if($subject->permission == 1 && $subject->status == 1)
                         <a class="nav-link rounded-0" id="v-pills-profile-tab-{{ $subject->id }}" data-toggle="pill" href="#v-pills-profile-{{ $subject->id }}" role="tab" aria-controls="v-pills-profile" aria-selected="false">
                             {{ $subject->name }}
                         </a>
@@ -41,7 +41,7 @@
             <div class="col-9">
                 <div class="tab-content" id="v-pills-tabContent">
                     @foreach ($subjects as $subject)
-                    @if($subject->permission)
+                    @if($subject->permission == 1 && $subject->status == 1)
                         <div class="tab-pane fade" id="v-pills-profile-{{ $subject->id }}" role="tabpanel" aria-labelledby="v-pills-profile-tab-{{ $subject->id }}">
                             <div class="card rounded-0">
                                 <div class="card-header">
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="card-body">
                                     @foreach ($subject->questions as $key => $question)
-                                        @if($subject->permission && $subject->status)
+                                        @if($subject->permission == 1 && $subject->status == 1)
                                             <div class="card rounded-0">
                                                 <div class="card-header mb-0 pb-0">
                                                 <div class="d-flex justify-content-between">

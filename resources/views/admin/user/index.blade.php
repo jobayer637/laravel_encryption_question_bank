@@ -25,8 +25,9 @@
         </div>
     </div>
 
-    <div class="card-header d-flex align-items-center">
+    <div class="card-header d-flex justify-content-between">
         <h3 class="h4">Users Management</h3>
+        <input type="text" id="searchValue" class="form-control col-md-4" placeholder="Search Here .... ">
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -113,5 +114,18 @@
             return false;
         })
     })
+</script>
+
+{{-- Search value --}}
+<script>
+    $( document ).ready(function() {
+        let filter = document.getElementsByClassName("filterData");
+        $(document).on('keyup', '#searchValue', function(){
+            let value = $(this).val().toLowerCase()
+            $("tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        })
+    });
 </script>
 @endpush

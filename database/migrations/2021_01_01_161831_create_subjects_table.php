@@ -22,6 +22,7 @@ class CreateSubjectsTable extends Migration
             $table->boolean('status')->default(false);
             $table->boolean('permission')->default(false);
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+            $table->integer('user_id')->default(0);
             $table->timestamps();
         });
     }

@@ -34,10 +34,10 @@ class AuthorQuestionController extends Controller
         foreach ($subjects as $key => $subject) {
             foreach ($subject->questions as $k => $question) {
                 $question->question = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->question));
-                $question->option1 = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option1));
-                $question->option2 = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option2));
-                $question->option3 = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option3));
-                $question->option4 = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option4));
+                $question->option1  = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option1));
+                $question->option2  = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option2));
+                $question->option3  = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option3));
+                $question->option4  = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option4));
             }
         }
 
