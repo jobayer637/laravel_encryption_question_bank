@@ -20,6 +20,21 @@
 @endphp
    <div class="row">
        <div class="col-md-6">
+
+        <div class="card">
+               <div class="card-header"><div class="badge badge-danger">Set Publish Time</div></div>
+               <div class="card-body">
+                   <h3 id="publishDate">{{ Carbon::parse($subject->set_time) }}</h3>
+                    <form id="userStatus" action="{{ route('admin.subject.update', $subject->id) }}" class="mr-3">
+                        @csrf
+                        <div class="input-group">
+                            <input type="datetime-local" id="set_time" class="form-control" name="set_time">
+                            <button type="submit" class="btn btn-primary rounded-0 disabled">Update</button>
+                        </div>
+                    </form>
+               </div>
+           </div>
+
             <div class="card">
                <div class="card-header"><div class="badge badge-danger">Update Status</div></div>
                <div class="card-body">
@@ -150,5 +165,49 @@
         })
     })
 </script>
+
+<script>
+    var dxd =  document.getElementById("publishDate").innerHTML
+    var countDownDate = new Date(dxd).getTime();
+
+
+    var x = setInterval(function() {
+    var now = new Date().getTime();
+    var distance = countDownDate - now;
+
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    if (distance > 0){
+        document.getElementById("publishDate").innerHTML = days + "days " + hours + "hours "
+    + minutes + "minuits " + seconds + "seconds ";
+    }
+
+    if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
+        clearInterval(x);
+        document.getElementById("publishDate").innerHTML = "Published!";
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'PUT',
+                data: {
+                    _token: $('input[name=_token]').val(),
+                    status: 1,
+                    set_time: null
+                },
+                success: function(response){
+                    console.log(response.success)
+                    if (response.success) {
+                        swal("Done!", 'Successfully Updated', "success")
+                        .then(()=>{location.reload()})
+                    } else {
+                        swal("Error!", 'Something went wrong', "error")
+                    }
+                }
+            })
+    }}, 1000);
+</script>
+
 
 @endpush

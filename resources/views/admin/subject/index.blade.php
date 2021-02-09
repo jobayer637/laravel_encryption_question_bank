@@ -21,44 +21,44 @@
 <div class="row">
     <div class="col-md-8">
         <div class="card rounded-0">
-    <div class="card-header d-flex justify-content-between">
-        <h4>All Subjects [{{ count($subjects) }}] </h4>
-        <input type="text" id="searchValue" class="form-control col-md-4" placeholder="Search Here .... ">
-    </div>
-    <div class="card-body">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">S/L</th>
-                    <th scope="col">Subject Name</th>
-                    <th scope="col">Department</th>
-                    <th scope="col">Updated</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Permission</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-               @foreach ($subjects as $key => $subject)
+            <div class="card-header d-flex justify-content-between">
+                <h4>All Subjects [{{ count($subjects) }}] </h4>
+                <input type="text" id="searchValue" class="form-control col-md-4" placeholder="Search Here .... ">
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">S/L</th>
+                            <th scope="col">Subject Name</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Updated</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Permission</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($subjects as $key => $subject)
 
-                     <tr class="filterData">
-                        <th>{{ $key+1 }}</th>
-                        <td>{{ $subject->name }}</td>
-                        <td>{{ $subject->department->name }}</td>
-                        <td>{{ Carbon::parse($subject->updated_at == NULL? $subject->created_at: $subject->updated_at)->format('d-m-Y') }}</td>
-                        <td><span class="badge {{ $subject->status==true?'badge-warning':'' }}">{{ $subject->status==true?'active':'blocked' }}</span></td>
-                        <td><span class="badge {{ $subject->permission==true?'badge-danger':'' }}">{{ $subject->permission==true?'permitted': 'not permit' }}</span></td>
-                        <td>
-                            <a href="{{ route('admin.subject.show', $subject->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
-                            <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
-                            <button id="deleteQuestion" data-url="{{ route('admin.subject.destroy', $subject->id) }}" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-               @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
+                            <tr class="filterData">
+                                <th>{{ $key+1 }}</th>
+                                <td>{{ $subject->name }}</td>
+                                <td>{{ $subject->department->name }}</td>
+                                <td>{{ Carbon::parse($subject->updated_at == NULL? $subject->created_at: $subject->updated_at)->format('d-m-Y') }}</td>
+                                <td><span class="badge {{ $subject->status==true?'badge-warning':'' }}">{{ $subject->status==true?'active':'blocked' }}</span></td>
+                                <td><span class="badge {{ $subject->permission==true?'badge-danger':'' }}">{{ $subject->permission==true?'permitted': 'not permit' }}</span></td>
+                                <td>
+                                    <a href="{{ route('admin.subject.show', $subject->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
+                                    <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
+                                    <button id="deleteQuestion" data-url="{{ route('admin.subject.destroy', $subject->id) }}" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="col-md-4">
         <div class="card rounded-0">
