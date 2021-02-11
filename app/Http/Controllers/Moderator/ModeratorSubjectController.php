@@ -15,7 +15,7 @@ class ModeratorSubjectController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth' ,'UserSubjectPermission']);
+        $this->middleware(['auth', 'UserSubjectPermission']);
     }
 
     public function index()
@@ -32,7 +32,7 @@ class ModeratorSubjectController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->back();
     }
 
     /**
@@ -43,18 +43,20 @@ class ModeratorSubjectController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $newSubject = new Subject();
-            $newSubject->department_id = $request->department;
-            $newSubject->name = $request->subject;
-            $newSubject->slug = Str::slug($request->subject, '-');
-            $newSubject->code = $request->subject;
-            $newSubject->save();
+        // try {
+        //     $newSubject = new Subject();
+        //     $newSubject->department_id = $request->department;
+        //     $newSubject->name = $request->subject;
+        //     $newSubject->slug = Str::slug($request->subject, '-');
+        //     $newSubject->code = $request->subject;
+        //     $newSubject->save();
 
-            return response()->json(['success' => true], 200);
-        } catch (\Exception $ex) {
-            return response()->json(['success' => false], 200);
-        }
+        //     return response()->json(['success' => true], 200);
+        // } catch (\Exception $ex) {
+        //     return response()->json(['success' => false], 200);
+        // }
+
+        return redirect()->back();
     }
 
     /**
@@ -65,9 +67,11 @@ class ModeratorSubjectController extends Controller
      */
     public function show($id)
     {
-        $subject = Subject::with('department')->find($id);
-        $departments = Department::get();
-        return view('moderator.subject.show', compact('subject', 'departments'));
+        // $subject = Subject::with('department')->find($id);
+        // $departments = Department::get();
+        // return view('moderator.subject.show', compact('subject', 'departments'));
+
+        return redirect()->back();
     }
 
     /**
@@ -78,7 +82,7 @@ class ModeratorSubjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        return redirect()->back();
     }
 
     /**
@@ -90,14 +94,16 @@ class ModeratorSubjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $data = $request->except(['_token']);
-            Subject::where('id', $id)->update($data);
+        // try {
+        //     $data = $request->except(['_token']);
+        //     Subject::where('id', $id)->update($data);
 
-            return response()->json(['success' => true], 200);
-        } catch (\Exception $ex) {
-            return response()->json(['success' => false], 200);
-        }
+        //     return response()->json(['success' => true], 200);
+        // } catch (\Exception $ex) {
+        //     return response()->json(['success' => false], 200);
+        // }
+
+        return redirect()->back();
     }
 
     /**
@@ -108,15 +114,17 @@ class ModeratorSubjectController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $delete = Subject::where('id', $id)->delete();
-            if ($delete) {
-                return response()->json(['success' => true], 200);
-            } else {
-                return response()->json(['success' => false], 200);
-            }
-        } catch (\Exception $ex) {
-            return response()->json(['success' => false], 200);
-        }
+        // try {
+        //     $delete = Subject::where('id', $id)->delete();
+        //     if ($delete) {
+        //         return response()->json(['success' => true], 200);
+        //     } else {
+        //         return response()->json(['success' => false], 200);
+        //     }
+        // } catch (\Exception $ex) {
+        //     return response()->json(['success' => false], 200);
+        // }
+
+        return redirect()->back();
     }
 }

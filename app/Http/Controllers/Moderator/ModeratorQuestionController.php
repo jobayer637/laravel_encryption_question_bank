@@ -10,6 +10,7 @@ use App\Question;
 use App\Helper as RSA;
 use App\Key;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class ModeratorQuestionController extends Controller
 {
@@ -26,8 +27,31 @@ class ModeratorQuestionController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with('questions')->get();
-        return view('moderator.question.index', compact('subjects'));
+        // $subjects = Subject::with('questions')->get();
+        // $subject = Subject::where('id', Auth::user()->subject_id)->with('questions')->first();
+        // return view('moderator.question.index', compact('subject'));
+
+        $userId = Auth::user()->id;
+        $adminId = User::where('role_id', 1)->select('id')->first();
+
+        $userKeys = Key::where('user_id', $userId)->select(['public_key', 'private_key'])->first();
+        $adminKeys = Key::where('user_id', $adminId->id)->select(['public_key', 'private_key'])->first();
+
+
+        $userRsa = new RSA\Encryption($userKeys->private_key, $userKeys->public_key);
+        $adminRsa = new RSA\Encryption($adminKeys->private_key, $adminKeys->public_key);
+
+        $subject =  Subject::where('id', Auth::user()->subject_id)->with('questions')->first();
+
+        foreach ($subject->questions as $k => $question) {
+            $question->question = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->question));
+            $question->option1  = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option1));
+            $question->option2  = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option2));
+            $question->option3  = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option3));
+            $question->option4  = $userRsa->publicEncrypt($adminRsa->privDecrypt($question->option4));
+        }
+
+        return view('moderator.question.index', compact('subject'));
     }
 
     /**
@@ -39,8 +63,13 @@ class ModeratorQuestionController extends Controller
     {
         // $decryptionData = $rsa->privDecrypt($ecryptionData);
         $subject_id = $request->subject_id;
-        $questions = Question::where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
-        return view('moderator.question.create', compact('subject_id', 'questions'));
+        if (Auth::user()->subject_id == $subject_id) {
+            $questions = Question::where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
+
+            return view('moderator.question.create', compact('subject_id', 'questions'));
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

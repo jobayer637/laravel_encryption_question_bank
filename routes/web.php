@@ -31,9 +31,12 @@ Route::get('/get-admin-pdf/{id}', 'PDF\PdfController@adminPdf')->name('get-admin
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('dashboard', 'AdminDashboardController@index')->name('index');
+    Route::get('permission', 'AdminPermissionController@index')->name('permission.index');
+    Route::post('permission/update', 'AdminPermissionController@update')->name('permission.update');
     Route::resource('question', 'AdminQuestionController');
     Route::resource('subject', 'AdminSubjectController');
     Route::resource('users', 'AdminUserController');
+    Route::resource('pending-users', 'PendingUserController');
     Route::resource('institutes', 'AdminInstituteController');
     Route::resource('board', 'AdminBoardController');
     Route::resource('department', 'AdminDepartmentController');

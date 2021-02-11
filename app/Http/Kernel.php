@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'author' => \App\Http\Middleware\AuthorMiddleware::class,
         'moderator' => \App\Http\Middleware\ModeratorMiddleware::class,
         'UserSubjectPermission' => \App\Http\Middleware\UserSubjectPermissionMiddleware::class,
+        'RegisterPermission' => \App\Http\Middleware\RegisterPermissionMiddleware::class,
     ];
 }

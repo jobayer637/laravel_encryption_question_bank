@@ -7,8 +7,8 @@
 @section('current-page')
 <div class="breadcrumb-holder container-fluid">
     <ul class="breadcrumb">
-        <li class="breadcrumb-item active"><a href="{{ route('admin.index') }}" }}>Index</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('admin.question.index') }}" }}>Question</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('moderator.index') }}" }}>Index</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('moderator.question.index') }}" }}>Question</a></li>
         <li class="breadcrumb-item active">Create</li>
     </ul>
 </div>
@@ -125,7 +125,7 @@
         event.preventDefault()
         var data = $(this).serializeArray();
         $.ajax({
-            url: "{{ route('admin.question.store')}}",
+            url: "{{ route('moderator.question.store')}}",
             type: "POST",
             dataType: "JSON",
             data:data,

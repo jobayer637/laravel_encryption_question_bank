@@ -1,7 +1,8 @@
 <nav class="side-navbar sticky-top">
           <!-- Sidebar Header-->
           <div class="sidebar-header d-flex align-items-center">
-            <div class="avatar"><img src="{{ asset('assets/img/avatar-1.jpg') }}" alt="..." class="img-fluid rounded-circle"></div>
+            {{-- <div class="avatar"><img src="{{ asset('assets/img/avatar-1.jpg') }}" alt="..." class="img-fluid rounded-circle"></div> --}}
+            <div class="avatar"><img src="{{ asset(Auth::user()->image) }}" alt="..." class="img-fluid rounded-circle"></div>
             <div class="title">
               <h1 class="h4">{{ Auth::user()->name }}</h1>
               <p>Web Developer</p>
@@ -11,7 +12,9 @@
           @if(Request::is('admin*'))
             <ul class="list-unstyled">
                 <li class="{{ Request::is('admin/dashboard')?'active':'' }}"><a href="{{ route('admin.index') }}"> <i class="fas fa-house-user"></i>Home </a></li>
+                <li class="{{ Request::is('admin/permission')?'active':'' }}"><a href="{{ route('admin.permission.index') }}"> <i class="fab fa-product-hunt"></i>Permission</a></li>
                 <li class="{{ Request::is('admin/users*')?'active':'' }}"><a href="{{ route('admin.users.index') }}"> <i class="fas fa-user-tie"></i>Users </a></li>
+                <li class="{{ Request::is('admin/pending-users*')?'active':'' }}"><a href="{{ route('admin.pending-users.index') }}"> <i class="fas fa-user-tie"></i>Pending Users </a></li>
                 <li class="{{ Request::is('admin/board*')?'active':'' }}"><a href="{{ route('admin.board.index') }}"> <i class="fas fa-chess-rook"></i>Board </a></li>
                 <li class="{{ Request::is('admin/institute*')?'active':'' }}"><a href="{{ route('admin.institutes.index') }}"> <i class="fas fa-university"></i>Institutes </a></li>
                 <li class="{{ Request::is('admin/department*')?'active':'' }}"><a href="{{ route('admin.department.index') }}"> <i class="fas fa-layer-group"></i></i>Department </a></li>
