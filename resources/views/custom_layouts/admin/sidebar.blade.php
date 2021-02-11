@@ -23,6 +23,9 @@
            @if(Request::is('moderator*'))
             <ul class="list-unstyled">
                 <li class="{{ Request::is('moderator/dashboard')?'active':'' }}"><a href="{{ route('moderator.index') }}"> <i class="icon-home"></i>Home </a></li>
+                <li class="{{ Request::is('moderator/subject*')?'active':'' }}"><a href="{{ route('moderator.subject.index') }}"> <i class="fas fa-book"></i>Subject </a></li>
+                <li class="{{ Request::is('moderator/question*')?'active':'' }}"><a href="{{ route('moderator.question.index') }}"> <i class="fas fa-question-circle"></i>Question </a></li>
+
             </ul>
           @endif
 

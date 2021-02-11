@@ -1,11 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+
+use App\Department;
 use Illuminate\Http\Request;
-use App\User;
+use App\Subject;
+use Illuminate\Support\Str;
 
-class AdminUserController extends Controller
+class AdminSubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +18,9 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['role', 'institute'])->get();
-        return view('admin.user.index', compact('users'));
+        $departments = Department::get();
+        $subjects = Subject::with('department')->get();
+        return view('admin.subject.index', compact('subjects', 'departments'));
     }
 
     /**
@@ -36,7 +41,18 @@ class AdminUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $newSubject = new Subject();
+            $newSubject->department_id = $request->department;
+            $newSubject->name = $request->subject;
+            $newSubject->slug = Str::slug($request->subject, '-');
+            $newSubject->code = $request->subject;
+            $newSubject->save();
+
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false], 200);
+        }
     }
 
     /**
@@ -47,12 +63,9 @@ class AdminUserController extends Controller
      */
     public function show($id)
     {
-        $user = User::with(['role', 'institute'])->find($id);
-        if ($user->role_id == 1) {
-            return back();
-        } else {
-            return view('admin.user.show', compact('user'));
-        }
+        $subject = Subject::with('department')->find($id);
+        $departments = Department::get();
+        return view('admin.subject.show', compact('subject', 'departments'));
     }
 
     /**
@@ -77,7 +90,7 @@ class AdminUserController extends Controller
     {
         try {
             $data = $request->except(['_token']);
-            $update = User::where('id', $id)->update($data);
+            Subject::where('id', $id)->update($data);
 
             return response()->json(['success' => true], 200);
         } catch (\Exception $ex) {
@@ -94,9 +107,12 @@ class AdminUserController extends Controller
     public function destroy($id)
     {
         try {
-            $delete = User::where('id', $id)->delete();
-
-            return response()->json(['success' => true], 200);
+            $delete = Subject::where('id', $id)->delete();
+            if ($delete) {
+                return response()->json(['success' => true], 200);
+            } else {
+                return response()->json(['success' => false], 200);
+            }
         } catch (\Exception $ex) {
             return response()->json(['success' => false], 200);
         }

@@ -1,24 +1,28 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Moderator;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 use App\Department;
-use Illuminate\Http\Request;
 use App\Subject;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
-class AdminSubjectController extends Controller
+
+class ModeratorSubjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware(['auth' ,'UserSubjectPermission']);
+    }
+
     public function index()
     {
         $departments = Department::get();
-        $subjects = Subject::with('department')->get();
-        return view('admin.subject.index', compact('subjects', 'departments'));
+        $subject = Subject::where('id', Auth::user()->subject_id)->with('department')->first();
+        return view('moderator.subject.index', compact('subject', 'departments'));
     }
 
     /**
@@ -63,7 +67,7 @@ class AdminSubjectController extends Controller
     {
         $subject = Subject::with('department')->find($id);
         $departments = Department::get();
-        return view('admin.subject.show', compact('subject', 'departments'));
+        return view('moderator.subject.show', compact('subject', 'departments'));
     }
 
     /**

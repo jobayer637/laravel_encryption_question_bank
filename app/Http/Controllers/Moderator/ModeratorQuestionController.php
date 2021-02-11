@@ -1,14 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Moderator;
 
-use App\Board;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+
+use App\Subject;
+use App\Question;
+use App\Helper as RSA;
+use App\Key;
 use Illuminate\Support\Facades\Auth;
 
-class AdminBoardController extends Controller
+class ModeratorQuestionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'UserSubjectPermission']);
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +26,8 @@ class AdminBoardController extends Controller
      */
     public function index()
     {
-        $boards = Board::with(['user'])->get();
-        return view('admin.board.index', compact('boards'));
+        $subjects = Subject::with('questions')->get();
+        return view('moderator.question.index', compact('subjects'));
     }
 
     /**
@@ -25,9 +35,12 @@ class AdminBoardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // $decryptionData = $rsa->privDecrypt($ecryptionData);
+        $subject_id = $request->subject_id;
+        $questions = Question::where('subject_id', $subject_id)->orderBy('created_at', 'desc')->get();
+        return view('moderator.question.create', compact('subject_id', 'questions'));
     }
 
     /**
@@ -39,11 +52,18 @@ class AdminBoardController extends Controller
     public function store(Request $request)
     {
         try {
-            $newBoard = new Board();
-            $newBoard->user_id = Auth::user()->id;
-            $newBoard->name = $request->name;
-            $newBoard->slug = Str::slug($request->name, '-');
-            $newBoard->save();
+            $key = Key::where('user_id', 1)->first();
+            $rsa = new RSA\Encryption($key->private_key, $key->public_key);
+
+            $newQuestion = new Question();
+            $newQuestion->subject_id    = $request->subject_id;
+            $newQuestion->question      = $rsa->publicEncrypt($request->question);
+            $newQuestion->option1       = $rsa->publicEncrypt($request->option1);
+            $newQuestion->option2       = $rsa->publicEncrypt($request->option2);
+            $newQuestion->option3       = $rsa->publicEncrypt($request->option3);
+            $newQuestion->option4       = $rsa->publicEncrypt($request->option4);
+            $newQuestion->marks         = $request->marks;
+            $newQuestion->save();
 
             return response()->json(['success' => true], 200);
         } catch (\Exception $ex) {
@@ -94,7 +114,7 @@ class AdminBoardController extends Controller
     public function destroy($id)
     {
         try {
-            Board::where('id', $id)->delete();
+            $delete = Question::where('id', $id)->delete();
 
             return response()->json(['success' => true], 200);
         } catch (\Exception $ex) {

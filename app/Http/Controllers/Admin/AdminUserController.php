@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Department;
+use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\Subject;
 
-class AdminDepartmentController extends Controller
+class AdminUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,8 @@ class AdminDepartmentController extends Controller
      */
     public function index()
     {
-        $departments = Department::get();
-        return view('admin.department.index', compact('departments'));
+        $users = User::with(['role', 'institute'])->get();
+        return view('admin.user.index', compact('users'));
     }
 
     /**
@@ -38,17 +39,7 @@ class AdminDepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $newDept = new Department();
-            $newDept->user_id = Auth::user()->id;
-            $newDept->name = $request->name;
-            $newDept->slug = Str::slug($request->name, '-');
-            $newDept->save();
-
-            return response()->json(['success' => true], 200);
-        } catch (\Exception $ex) {
-            return response()->json(['success' => false], 200);
-        }
+        //
     }
 
     /**
@@ -59,7 +50,13 @@ class AdminDepartmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $subjects = Subject::all();
+        $user = User::with(['role', 'institute'])->find($id);
+        if ($user->role_id == 1) {
+            return back();
+        } else {
+            return view('admin.user.show', compact('user', 'subjects'));
+        }
     }
 
     /**
@@ -82,7 +79,14 @@ class AdminDepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $data = $request->except(['_token']);
+            $update = User::where('id', $id)->update($data);
+
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false], 200);
+        }
     }
 
     /**
@@ -93,6 +97,12 @@ class AdminDepartmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $delete = User::where('id', $id)->delete();
+
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false], 200);
+        }
     }
 }

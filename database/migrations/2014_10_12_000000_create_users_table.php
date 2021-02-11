@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->integer('permission')->default(0);
+            $table->integer('subject_id')->default(0);
         });
     }
 

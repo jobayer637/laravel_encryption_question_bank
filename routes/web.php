@@ -26,9 +26,10 @@ Route::post('/custor-register-create', 'RegisterController@registerCreate')->nam
 Route::resource('/question', 'QuestionController');
 
 
+Route::get('/get-admin-pdf/{id}', 'PDF\PdfController@adminPdf')->name('get-admin-pdf');
 
 
-Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
+Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('dashboard', 'AdminDashboardController@index')->name('index');
     Route::resource('question', 'AdminQuestionController');
     Route::resource('subject', 'AdminSubjectController');
@@ -41,11 +42,13 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['auth', 'a
     Route::get('unions', 'AdminAjaxController@unions')->name('unions');
 });
 
-Route::group(['as' => 'author.', 'prefix' => 'author', 'middleware' => ['auth', 'author']], function () {
+Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'Author', 'middleware' => ['auth', 'author']], function () {
     Route::get('dashboard', 'AuthorDashboardController@index')->name('index');
     Route::resource('question', 'AuthorQuestionController');
 });
 
-Route::group(['as' => 'moderator.', 'prefix' => 'moderator', 'middleware' => ['auth', 'moderator']], function () {
+Route::group(['as' => 'moderator.', 'prefix' => 'moderator', 'namespace' => 'Moderator', 'middleware' => ['auth', 'moderator']], function () {
     Route::get('dashboard', 'ModeratorDashboardController@index')->name('index');
+    Route::resource('subject', 'ModeratorSubjectController');
+    Route::resource('question', 'ModeratorQuestionController');
 });

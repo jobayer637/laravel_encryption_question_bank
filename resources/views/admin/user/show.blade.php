@@ -90,6 +90,24 @@
                     </form>
                </div>
            </div>
+
+           <div class="card">
+               <div class="card-header"><div class="badge badge-danger">Subject Permission</div></div>
+               <div class="card-body">
+                    <form id="userPermission" action="{{ route('admin.users.update', $user->id) }}" >
+                        @csrf
+                        <div class="input-group">
+                            <select id="inputState" name="subject_id" class="form-control">
+                                <option value="0" {{ $user->subject_id==0? 'selected':'' }}>Not Permit</option>
+                                @foreach ($subjects as $subject)
+                                    <option value="{{ $subject->id }}" {{ $user->subject_id==$subject->id? 'selected':'' }}>{{ $subject->name }}</option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn btn-danger rounded-0 px-5 disabled"><i class="fas {{ $user->subject_id!=0? 'fa-unlock':'fa-lock' }}"></i></button>
+                        </div>
+                    </form>
+               </div>
+           </div>
        </div>
    </div>
 @endsection
