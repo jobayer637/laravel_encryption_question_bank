@@ -12,6 +12,7 @@
           @if(Request::is('admin*'))
             <ul class="list-unstyled">
                 <li class="{{ Request::is('admin/dashboard')?'active':'' }}"><a href="{{ route('admin.index') }}"> <i class="fas fa-house-user"></i>Home </a></li>
+                <li class="{{ Request::is('admin/profile')?'active':'' }}"><a href="{{ route('admin.profile.index') }}"> <i class="fas fa-address-card"></i> Profile </a></li>
                 <li class="{{ Request::is('admin/permission')?'active':'' }}"><a href="{{ route('admin.permission.index') }}"> <i class="fab fa-product-hunt"></i>Permission</a></li>
                 <li class="{{ Request::is('admin/users*')?'active':'' }}"><a href="{{ route('admin.users.index') }}"> <i class="fas fa-user-tie"></i>Users </a></li>
                 <li class="{{ Request::is('admin/pending-users*')?'active':'' }}"><a href="{{ route('admin.pending-users.index') }}"> <i class="fas fa-user-tie"></i>Pending Users </a></li>
@@ -26,6 +27,7 @@
            @if(Request::is('moderator*'))
             <ul class="list-unstyled">
                 <li class="{{ Request::is('moderator/dashboard')?'active':'' }}"><a href="{{ route('moderator.index') }}"> <i class="icon-home"></i>Home </a></li>
+                <li class="{{ Request::is('moderator/profile*')?'active':'' }}"><a href="{{ route('moderator.profile.index') }}"> <i class="fas fa-address-card"></i> Profile </a></li>
                 <li class="{{ Request::is('moderator/subject*')?'active':'' }}"><a href="{{ route('moderator.subject.index') }}"> <i class="fas fa-book"></i>Subject </a></li>
                 <li class="{{ Request::is('moderator/question*')?'active':'' }}"><a href="{{ route('moderator.question.index') }}"> <i class="fas fa-question-circle"></i>Question </a></li>
 
@@ -35,6 +37,7 @@
            @if(Request::is('author*'))
             <ul class="list-unstyled">
                 <li class="{{ Request::is('author/dashboard')?'active':'' }}"><a href="{{ route('author.index') }}"> <i class="icon-home"></i>Home </a></li>
+                <li class="{{ Request::is('author/profile')?'active':'' }}"><a href="{{ route('author.profile.index') }}"> <i class="fas fa-address-card"></i> Profile </a></li>
                 <li class="{{ Request::is('author/question*')?'active':'' }}"><a href="{{ route('author.question.index') }}"> <i class="fas fa-newspaper"></i>Question </a></li>
             </ul>
           @endif

@@ -1,14 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-use App\User;
-use App\Subject;
 
-class AdminUserController extends Controller
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
+use App\User;
+
+
+class AuthorProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +21,8 @@ class AdminUserController extends Controller
      */
     public function index()
     {
-        $users = User::where('role_id', '!=', 1)->with(['role', 'institute'])->get();
-        return view('admin.user.index', compact('users'));
+        $user = User::where('id', Auth::user()->id)->with(['role', 'institute'])->first();
+        return view('author.profile.index', compact('user'));
     }
 
     /**
@@ -50,13 +54,7 @@ class AdminUserController extends Controller
      */
     public function show($id)
     {
-        $subjects = Subject::all();
-        $user = User::with(['role', 'institute'])->find($id);
-        if ($user->role_id == 1) {
-            return back();
-        } else {
-            return view('admin.user.show', compact('user', 'subjects'));
-        }
+        //
     }
 
     /**
@@ -79,13 +77,30 @@ class AdminUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $data = $request->except(['_token']);
-            $update = User::where('id', $id)->update($data);
+        $data = $request->except(['_token', '_method']);
+        if ($request->hasFile('image')) {
+            $image = $request->image;
+            $ext = $image->getClientOriginalExtension();
+            $name = Str::slug(Auth::user()->name, '-') . '_' . Str::random(5) . '_' . time();
+            $merge_name = $name . '.' . $ext;
 
-            return response()->json(['success' => true], 200);
+            if (!Storage::disk('public')->exists('images/profile')) {
+                Storage::disk('public')->makeDirectory('images/profile');
+            }
+
+            $profileImage = Image::make($image)->resize(300, 320)->save('foo');
+            Storage::disk('public')->put('images/profile/' . $merge_name, $profileImage);
+            $path = 'storage/images/profile/' . $merge_name;
+
+            $data['image'] = $path;
+        }
+
+        try {
+            User::where('id', $id)->update($data);
+
+            return back();
         } catch (\Exception $ex) {
-            return response()->json(['success' => false], 200);
+            return back();
         }
     }
 
@@ -97,12 +112,6 @@ class AdminUserController extends Controller
      */
     public function destroy($id)
     {
-        try {
-            $delete = User::where('id', $id)->delete();
-
-            return response()->json(['success' => true], 200);
-        } catch (\Exception $ex) {
-            return response()->json(['success' => false], 200);
-        }
+        //
     }
 }
