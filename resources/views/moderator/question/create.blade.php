@@ -67,11 +67,13 @@
                         <div class="card-header mb-0 pb-0">
                             <div class="d-flex justify-content-between">
                                 <div class="text-capitalize text-left float-left text-bold"><span>Q{{ $key+1 }}.</span>  <span>{!! $rsa->privDecrypt($question->question) !!}</span></div>
+                                @if(Auth::user()->update_permission == 1)
                                 <div>
                                     <button class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></button>
                                     <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
-                                    <button data-url="{{ route('question.destroy',$question->id) }}" class="deleteQuestion btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    <button data-url="{{ route('moderator.question.destroy',$question->id) }}" class="deleteQuestion btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                                 </div>
+                                @endif
                             </div>
                         </div>
                         <div class="card-body">

@@ -30,7 +30,9 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <a class="btn btn-dark btn-sm rounded-0" href="{{ route('get-admin-pdf', $subject->id) }}">Get PDF</a>
+                        @if(Auth::user()->permission == 1)
                         <a href="{{ route('moderator.question.create', ['subject_id'=> $subject->id]) }}" class="btn btn-sm btn-warning rounded-0 ml-3">Add New Question</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -41,11 +43,13 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
                             <div class="text-capitalize text-left float-left text-bold"><span>Q{{ $key+1 }}.</span>  <span>{!! $rsa->privDecrypt($question->question) !!}</span></div>
+                            @if(Auth::user()->update_permission == 1)
                             <div>
                                 <button class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></button>
                                 <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
-                                <button data-url="{{ route('question.destroy',$question->id) }}" class="deleteQuestion btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                <button data-url="{{ route('moderator.question.destroy',$question->id) }}" class="deleteQuestion btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                             </div>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body">
