@@ -23,7 +23,9 @@ Auth::routes();
 Route::get('/home',                     'HomeController@index')->name('home');
 Route::get('/custor-register',          'RegisterController@register')->name('custom-register');
 Route::post('/custor-register-create',  'RegisterController@registerCreate')->name('custom-register-create');
-Route::resource('/question',            'QuestionController');
+// Route::resource('/question',            'QuestionController');
+
+Route::resource('notice', 'NoticeController');
 
 
 Route::get('/get-admin-pdf/{id}', 'PDF\PdfController@adminPdf')->name('get-admin-pdf');
@@ -42,6 +44,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::resource('institutes',       'AdminInstituteController');
     Route::resource('board',            'AdminBoardController');
     Route::resource('department',       'AdminDepartmentController');
+    Route::resource('notice',           'NoticeController');
     Route::get('districts',             'AdminAjaxController@districts')->name('districts');
     Route::get('upazilas',              'AdminAjaxController@upazilas')->name('upazilas');
     Route::get('unions',                'AdminAjaxController@unions')->name('unions');
