@@ -8,7 +8,6 @@ use App\Notice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Mockery\Matcher\Not;
 
 class NoticeController extends Controller
 {
@@ -19,7 +18,7 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        $notices = Notice::latest()->take(10)->get();
+        $notices = Notice::latest()->take(20)->get();
         return view('admin.notice.index', compact('notices'));
     }
 

@@ -19,7 +19,7 @@
 @endphp
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="card rounded-0">
             <div class="card-header d-flex justify-content-between">
                 <h4 class="text-primary">Latest Notice</h4>

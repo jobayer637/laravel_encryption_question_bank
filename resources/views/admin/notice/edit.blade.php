@@ -24,6 +24,7 @@
         <div class="card rounded-0">
             <div class="card-header d-flex justify-content-between">
                 <h4 class="text-primary">Update Notice </h4>
+                <a data-url="{{ route('admin.notice.destroy',$notice->id) }}" class="deleteNotice btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
             </div>
             <div class="card-body">
                 <form action="{{ route('admin.notice.update', $notice->id) }}" method="POST" enctype="multipart/form-data">
@@ -149,7 +150,7 @@
 </script>
 
 <script>
-    $(document).on('click', '#deleteQuestion', function(){
+    $(document).on('click', '.deleteNotice', function(){
         let url = $(this).data('url')
         swal({
             title: "Delete?",
@@ -168,7 +169,9 @@
                         console.log(response)
                         if (response.success) {
                             swal("Done!", 'Successfully Deleted', "success")
-                            .then(()=>{location.reload()})
+                            .then(()=>{
+                                window.location.href = "{{ route('admin.notice.index') }}"
+                            })
                         } else {
                             swal("Error!", 'Something went wrong', "error")
                         }

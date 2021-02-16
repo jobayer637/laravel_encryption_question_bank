@@ -60,7 +60,7 @@
                         @foreach ($notices as $key => $item)
                             <tr class="border">
                                 <th class="border border-dark">{{ $key+1 }}</th>
-                                <td class="border border-dark">{{ $item->title }}</td>
+                                <td class="border border-dark"><a href="{{ route('admin.notice.show', $item->id) }}">{{ $item->title }}</a></td>
                                 <td class="border border-dark">{{ $item->created_at }}</td>
                             </tr>
                         @endforeach
