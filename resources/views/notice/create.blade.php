@@ -7,8 +7,8 @@
 @section('current-page')
 <div class="breadcrumb-holder container-fluid">
     <ul class="breadcrumb">
-        <li class="breadcrumb-item active"><a href="{{ route('admin.index') }}" }}>Index</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('admin.notice.index') }}" }}>Notice</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('moderator.index') }}" }}>Index</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('notice.index') }}" }}>Notice</a></li>
         <li class="breadcrumb-item active">Show</li>
     </ul>
 </div>
@@ -23,14 +23,21 @@
     <div class="col-md-8">
         <div class="card rounded-0">
             <div class="card-header d-flex justify-content-between">
-                <h4 class="text-primary">{{ $notice->title }}</h4>
-                <div>
-                    <a href="{{ route('admin.notice.edit', $notice->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
-                    <a data-url="{{ route('admin.notice.destroy',$notice->id) }}" class="deleteNotice btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
-                </div>
+                <h4 class="text-primary">Create New Notice </h4>
             </div>
             <div class="card-body">
-                {!! $notice->body !!}
+                <form action="{{ route('notice.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="title">Enter Notice Title</label>
+                        <input type="text" name="title" class="form-control rounded-0" placeholder="Enter Notice Title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="body">Enter Notice Body</label>
+                        <textarea class="summernote" name="body" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark rounded-0">Submit</button>
+                </form>
             </div>
         </div>
     </div>
@@ -46,16 +53,16 @@
                         <tr class="border border-dark">
                             <th class="border border-dark" scope="col">#</th>
                             <th class="border border-dark" scope="col">Title</th>
+                            <th class="border border-dark" scope="col">Date</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($notices as $key => $item)
-                        @if($notice->id != $item->id)
                             <tr class="border">
                                 <th class="border border-dark">{{ $key+1 }}</th>
-                                <td class="border border-dark"><a href="{{ route('admin.notice.show', $item->id) }}">{{ $item->title }}</a></td>
+                                <td class="border border-dark">{{ $item->title }}</td>
+                                <td class="border border-dark">{{ $item->created_at }}</td>
                             </tr>
-                        @endif
                         @endforeach
                     </tbody>
                 </table>
@@ -67,6 +74,47 @@
 
 
 @push('js')
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script type="text/javascript">
+    $('.summernote').summernote({
+        height: 200,
+        toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],
+            // ['insert', ['link', 'picture', 'video']],
+            ['insert', ['link', 'picture']],
+        ],
+        popover: {
+           image: [
+                ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']]
+            ],
+            link: [
+                ['link', ['linkDialogShow', 'unlink']]
+            ],
+            table: [
+                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+            ],
+            air: [
+                ['color', ['color']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['ul', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']]
+            ]
+        }
+    });
+</script>
 
 <script>
     $(function(){
@@ -98,7 +146,7 @@
 </script>
 
 <script>
-    $(document).on('click', '.deleteNotice', function(){
+    $(document).on('click', '#deleteQuestion', function(){
         let url = $(this).data('url')
         swal({
             title: "Delete?",
@@ -117,9 +165,7 @@
                         console.log(response)
                         if (response.success) {
                             swal("Done!", 'Successfully Deleted', "success")
-                            .then(()=>{
-                                window.location.href = "{{ route('admin.notice.index') }}"
-                            })
+                            .then(()=>{location.reload()})
                         } else {
                             swal("Error!", 'Something went wrong', "error")
                         }

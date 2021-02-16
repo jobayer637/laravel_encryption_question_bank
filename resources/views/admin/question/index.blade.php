@@ -80,7 +80,7 @@
                                                 <div>
                                                     <button class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></button>
                                                     <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
-                                                    <button data-url="{{ route('question.destroy',$question->id) }}" class="deleteQuestion btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                                    <button data-url="{{ route('admin.question.destroy',$question->id) }}" class="deleteQuestion btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                                                 </div>
                                            </div>
                                         </div>

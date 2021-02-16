@@ -20,22 +20,32 @@
 @endphp
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-7">
         <div class="card rounded-0">
             <div class="card-header d-flex justify-content-between">
-                <h4 class="text-primary">{{ $notice->title }}</h4>
-                <div>
-                    <a href="{{ route('admin.notice.edit', $notice->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
-                    <a data-url="{{ route('admin.notice.destroy',$notice->id) }}" class="deleteNotice btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
-                </div>
+                <h4 class="text-primary">Update Notice </h4>
             </div>
             <div class="card-body">
-                {!! $notice->body !!}
+                <form action="{{ route('admin.notice.update', $notice->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="title">Enter Notice Title</label>
+                        <input type="text" name="title" class="form-control rounded-0" placeholder="Enter Notice Title" value="{{ $notice->title }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="body">Enter Notice Body</label>
+                        <textarea class="summernote" name="body" required>
+                            {{ $notice->body }}
+                        </textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark rounded-0">Submit</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-5">
         <div class="card rounded-0">
             <div class="card-header">
                 <h4>Latest 10 notices</h4>
@@ -68,6 +78,47 @@
 
 @push('js')
 
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<script type="text/javascript">
+    $('.summernote').summernote({
+        height: 400,
+        toolbar: [
+            // [groupName, [list of button]]
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],
+            // ['insert', ['link', 'picture', 'video']],
+            ['insert', ['link', 'picture']],
+        ],
+        popover: {
+           image: [
+                ['image', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']]
+            ],
+            link: [
+                ['link', ['linkDialogShow', 'unlink']]
+            ],
+            table: [
+                ['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+                ['delete', ['deleteRow', 'deleteCol', 'deleteTable']],
+            ],
+            air: [
+                ['color', ['color']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['ul', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']]
+            ]
+        }
+    });
+</script>
+
 <script>
     $(function(){
         $.ajaxSetup({
@@ -98,7 +149,7 @@
 </script>
 
 <script>
-    $(document).on('click', '.deleteNotice', function(){
+    $(document).on('click', '#deleteQuestion', function(){
         let url = $(this).data('url')
         swal({
             title: "Delete?",
@@ -117,9 +168,7 @@
                         console.log(response)
                         if (response.success) {
                             swal("Done!", 'Successfully Deleted', "success")
-                            .then(()=>{
-                                window.location.href = "{{ route('admin.notice.index') }}"
-                            })
+                            .then(()=>{location.reload()})
                         } else {
                             swal("Error!", 'Something went wrong', "error")
                         }
