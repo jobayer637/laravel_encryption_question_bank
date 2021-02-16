@@ -22,7 +22,7 @@
     $rsa = new RSA\Encryption($key->private_key, $key->public_key);
 @endphp
 
-@if(Auth::check() && Auth::user()->status==1 && Auth::user()->permission==1 )
+@if(Auth::check() && Auth::user()->status==1 )
    <div class="">
        <div class="row">
             <div class="col-3">
@@ -41,7 +41,7 @@
             <div class="col-9">
                 <div class="tab-content" id="v-pills-tabContent">
                     @foreach ($subjects as $subject)
-                    @if($subject->permission == 1 && $subject->status == 1)
+                    @if($subject->status == 1)
                         <div class="tab-pane fade" id="v-pills-profile-{{ $subject->id }}" role="tabpanel" aria-labelledby="v-pills-profile-tab-{{ $subject->id }}">
                             <div class="card rounded-0">
                                 <div class="card-header">
@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="card-body">
                                     @foreach ($subject->questions as $key => $question)
-                                        @if($subject->permission == 1 && $subject->status == 1)
+                                        @if($subject->status == 1)
                                             <div class="card rounded-0">
                                                 <div class="card-header mb-0 pb-0">
                                                 <div class="d-flex justify-content-between">

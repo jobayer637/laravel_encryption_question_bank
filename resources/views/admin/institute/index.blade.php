@@ -62,9 +62,9 @@
                 <td><div class="badge badge-warning">{{ $institute->status==true?'active':'deactive' }}</div></td>
                 <td><div class="badge badge-danger">{{ $institute->permission==true?'permitted': 'not permit' }}</div></td>
                 <td>
-                    <a href="{{ route('admin.users.show', $institute->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
+                    <a href="" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
                     <a href="" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
-                    <a data-url="{{ route('admin.users.destroy',$institute->id) }}" class="deleteUser btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
+                    <a data-url="" class="deleteUser btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
                 </td>
             </tr>
             @endforeach

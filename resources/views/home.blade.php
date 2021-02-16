@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Information') }}</div>
-                @if(Auth::check() && ((Auth::user()->status != 1) || (Auth::user()->permission != 1)))
+                @if(Auth::check() && ((Auth::user()->status != 1)))
                     <div class="card-body">
                         <h4>Your Request is Pending..</h4>
                         <h5>Please waiting for admin approval</h5>

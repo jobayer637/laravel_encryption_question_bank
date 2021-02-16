@@ -45,6 +45,7 @@
                 <li class="{{ Request::is('author/dashboard')?'active':'' }}"><a href="{{ route('author.index') }}"> <i class="icon-home"></i>Home </a></li>
                 <li class="{{ Request::is('author/profile')?'active':'' }}"><a href="{{ route('author.profile.index') }}"> <i class="fas fa-address-card"></i> Profile </a></li>
                 <li class="{{ Request::is('author/question*')?'active':'' }}"><a href="{{ route('author.question.index') }}"> <i class="fas fa-newspaper"></i>Question </a></li>
+                <li class="{{ Request::is('author/notice*')?'active':'' }}"><a href="{{ route('author.notice.index') }}"> <i class="fas fa-inbox"></i>Notice </a></li>
             </ul>
           @endif
 

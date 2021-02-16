@@ -54,7 +54,15 @@
           <!-- Page Header-->
           <header class="page-header">
             <div class="container-fluid">
-              <h2 class="no-margin-bottom">Dashboard</h2>
+              <h2 class="no-margin-bottom text-danger">
+                  @if (Auth::check() && Auth::user()->role_id == 1)
+                    ADMIN DASHBOARD
+                  @elseif(Auth::check() && Auth::user()->role_id == 2)
+                    MODERATOR DASHBOARD
+                  @elseif(Auth::check() && Auth::user()->role_id == 3)
+                    AUTHOR DASHBOARD
+                  @endif
+              </h2>
             </div>
           </header>
           <!-- Breadcrumb-->

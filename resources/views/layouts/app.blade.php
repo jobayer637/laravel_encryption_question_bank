@@ -27,10 +27,10 @@
                 @if(Auth::check() && Auth::user()->role_id==1)
                     <a class="navbar-brand" href="{{ route('admin.index') }}">Dashboard</a>
                 @endif
-                @if(Auth::check() && Auth::user()->role_id==2 && (Auth::user()->status == 1 && Auth::user()->permission == 1))
+                @if(Auth::check() && Auth::user()->role_id==2 && (Auth::user()->status == 1))
                     <a class="navbar-brand" href="{{ route('moderator.index') }}">Dashboard</a>
                 @endif
-                @if(Auth::check() && Auth::user()->role_id==3 && (Auth::user()->status == 1 && Auth::user()->permission == 1))
+                @if(Auth::check() && Auth::user()->role_id==3 && (Auth::user()->status == 1))
                     <a class="navbar-brand" href="{{ route('author.index') }}">Dashboard</a>
                 @endif
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

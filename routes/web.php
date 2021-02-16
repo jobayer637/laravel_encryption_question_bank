@@ -54,6 +54,7 @@ Route::group(['as' => 'author.', 'prefix' => 'author', 'namespace' => 'Author', 
     Route::get('dashboard',             'AuthorDashboardController@index')->name('index');
     Route::resource('profile',          'AuthorProfileController');
     Route::resource('question',         'AuthorQuestionController');
+    Route::resource('notice',           'NoticeController');
 });
 
 Route::group(['as' => 'moderator.', 'prefix' => 'moderator', 'namespace' => 'Moderator', 'middleware' => ['auth', 'moderator']], function () {
@@ -62,4 +63,5 @@ Route::group(['as' => 'moderator.', 'prefix' => 'moderator', 'namespace' => 'Mod
     Route::resource('subject',          'ModeratorSubjectController');
     Route::resource('question',         'ModeratorQuestionController');
     Route::resource('institutes',       'InstituteController');
+    Route::resource('notice',           'NoticeController');
 });
