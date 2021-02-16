@@ -41,7 +41,7 @@
 
             @if($user->role_id !=1)
             <div class="card">
-               <div class="card-header"><div class="badge badge-danger">Update Role</div></div>
+               <div class="card-header"><div class="badge badge-danger">User Role</div></div>
                <div class="card-body">
                     <form id="userStatus" action="{{ route('admin.users.update', $user->id) }}" >
                         @csrf
@@ -55,12 +55,28 @@
                     </form>
                </div>
            </div>
+
+            <div class="card">
+               <div class="card-header"><div class="badge badge-danger">Moderator Edit Permission</div></div>
+               <div class="card-body">
+                    <form id="updatePermission" action="{{ route('admin.users.update', $user->id) }}" >
+                        @csrf
+                        <div class="input-group">
+                            <select id="inputState" name="update_permission" class="form-control">
+                                <option value="1" {{ $user->update_permission==1?'selected':'' }}>Permitted</option>
+                                <option value="0" {{ $user->update_permission==0? 'selected':'' }}>Blocked</option>
+                            </select>
+                            <button type="submit" class="btn btn-danger rounded-0 px-5 disabled"><i class="fas {{ $user->update_permission==1? 'fa-unlock':'fa-lock' }}"></i></button>
+                        </div>
+                    </form>
+               </div>
+           </div>
            @endif
 
        </div>
        <div class="col-md-6">
            <div class="card">
-               <div class="card-header"><div class="badge badge-danger">Update Status</div></div>
+               <div class="card-header"><div class="badge badge-danger">User Status</div></div>
                <div class="card-body">
                     <form id="userStatus" action="{{ route('admin.users.update', $user->id) }}" >
                         @csrf
@@ -76,7 +92,7 @@
            </div>
 
            <div class="card">
-               <div class="card-header"><div class="badge badge-danger">Update Permission</div></div>
+               <div class="card-header"><div class="badge badge-danger">Moderator Add-New Permission</div></div>
                <div class="card-body">
                     <form id="userPermission" action="{{ route('admin.users.update', $user->id) }}" >
                         @csrf
@@ -92,7 +108,7 @@
            </div>
 
            <div class="card">
-               <div class="card-header"><div class="badge badge-danger">Subject Permission</div></div>
+               <div class="card-header"><div class="badge badge-danger">Moderator Subject Permission</div></div>
                <div class="card-body">
                     <form id="userPermission" action="{{ route('admin.users.update', $user->id) }}" >
                         @csrf
@@ -126,6 +142,24 @@
 <script>
     // User Status
     $(document).on('submit', '#userStatus', function(event){
+        event.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'PUT',
+            data: $(this).serializeArray(),
+            success: function(response){
+                if (response.success) {
+                    swal("Done!", 'Successfully Updated', "success")
+                    .then(()=>{location.reload()})
+                } else {
+                    swal("Error!", 'Something went wrong', "error")
+                }
+            }
+        })
+    })
+
+     // User Status
+    $(document).on('submit', '#updatePermission', function(event){
         event.preventDefault();
         $.ajax({
             url: $(this).attr('action'),

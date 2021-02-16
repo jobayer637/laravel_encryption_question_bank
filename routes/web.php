@@ -37,6 +37,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'mi
     Route::resource('question',         'AdminQuestionController');
     Route::resource('subject',          'AdminSubjectController');
     Route::resource('users',            'AdminUserController');
+    Route::resource('moderators',       'ModeratorController');
     Route::resource('pending-users',    'PendingUserController');
     Route::resource('institutes',       'AdminInstituteController');
     Route::resource('board',            'AdminBoardController');
@@ -57,4 +58,5 @@ Route::group(['as' => 'moderator.', 'prefix' => 'moderator', 'namespace' => 'Mod
     Route::resource('profile',          'ModeratorProfileController');
     Route::resource('subject',          'ModeratorSubjectController');
     Route::resource('question',         'ModeratorQuestionController');
+    Route::resource('institutes',       'InstituteController');
 });

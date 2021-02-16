@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\User;
+use App\Subject;
+
 class ModeratorController extends Controller
 {
     /**
@@ -14,7 +17,11 @@ class ModeratorController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::where('role_id', '!=', 1)
+            ->where('role_id', 2)
+            ->with(['role', 'institute'])
+            ->get();
+        return view('admin.moderator.index', compact('users'));
     }
 
     /**
@@ -46,7 +53,13 @@ class ModeratorController extends Controller
      */
     public function show($id)
     {
-        //
+        $subjects = Subject::all();
+        $user = User::with(['role', 'institute'])->find($id);
+        if ($user->role_id == 1) {
+            return back();
+        } else {
+            return view('admin.user.show', compact('user', 'subjects'));
+        }
     }
 
     /**
@@ -69,7 +82,14 @@ class ModeratorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $data = $request->except(['_token']);
+            $update = User::where('id', $id)->update($data);
+
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false], 200);
+        }
     }
 
     /**
@@ -80,6 +100,12 @@ class ModeratorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $delete = User::where('id', $id)->delete();
+
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false], 200);
+        }
     }
 }
