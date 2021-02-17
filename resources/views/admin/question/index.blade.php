@@ -42,9 +42,8 @@
                                 <div class="card-header">
                                    <div class="d-flex justify-content-between">
                                        <div class="d-flex justify-content-between">
-                                           <h4>{{ $subject->name }} Question  [total question: {{ count($subject->questions) }}] </h4>
-
-                                            <a class="btn btn-warning btn-sm" href="javascript:demoFromHTML()">Get PDF</a>
+                                           <button class="btn btn-secondary mr-1 rounded-0 disabled" disabled>{{ $subject->name }} Question  [total question: {{ count($subject->questions) }}]</button>
+                                            <a class="btn btn-warning rounded-0" href="{{ route('admin.question.show', $subject->slug) }}">Show PDF View</a>
                                         </div>
                                        <div class="d-flex justify-content-between">
                                            <form id="userStatus" action="{{ route('admin.subject.update', $subject->id) }}" class="mr-3">
@@ -68,7 +67,7 @@
                                                     <button type="submit" class="btn btn-primary rounded-0 disabled"><i class="fas {{ $subject->permission? 'fa-unlock':'fa-lock' }}"></i></button>
                                                 </div>
                                             </form>
-                                            <a href="{{ route('admin.question.create', ['subject_id'=> $subject->id]) }}" class="btn btn-sm btn-warning rounded-0 ml-3">Add New Question</a>
+                                            <a href="{{ route('admin.question.create', ['subject_id'=> $subject->id]) }}" class="btn btn-warning rounded-0 ml-3">Add New Question</a>
                                        </div>
                                    </div>
                                 </div>

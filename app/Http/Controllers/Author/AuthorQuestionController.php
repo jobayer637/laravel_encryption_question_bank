@@ -75,7 +75,8 @@ class AuthorQuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $subject = Subject::where('slug', $id)->with('questions')->first();
+        return view('author.question.show', compact('subject'));
     }
 
     /**

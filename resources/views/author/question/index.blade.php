@@ -24,64 +24,20 @@
 
 @if(Auth::check() && Auth::user()->status==1 )
    <div class="">
-       <div class="row">
-            <div class="col-3">
-                <div class="card rounded-0">
-                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    @foreach ($subjects as $subject)
-                    @if($subject->permission == 1 && $subject->status == 1)
-                        <a class="nav-link rounded-0" id="v-pills-profile-tab-{{ $subject->id }}" data-toggle="pill" href="#v-pills-profile-{{ $subject->id }}" role="tab" aria-controls="v-pills-profile" aria-selected="false">
-                            {{ $subject->name }}
-                        </a>
-                    @endif
-                    @endforeach
-                </div>
-                </div>
-            </div>
-            <div class="col-9">
-                <div class="tab-content" id="v-pills-tabContent">
-                    @foreach ($subjects as $subject)
-                    @if($subject->status == 1)
-                        <div class="tab-pane fade" id="v-pills-profile-{{ $subject->id }}" role="tabpanel" aria-labelledby="v-pills-profile-tab-{{ $subject->id }}">
-                            <div class="card rounded-0">
-                                <div class="card-header">
-                                   <div class="d-flex justify-content-between">
-                                       <div> <h4>{{ $subject->name }} Question  [total question: {{ count($subject->questions) }}] </h4></div>
-                                   </div>
-                                </div>
-                                <div class="card-body">
-                                    @foreach ($subject->questions as $key => $question)
-                                        @if($subject->status == 1)
-                                            <div class="card rounded-0">
-                                                <div class="card-header mb-0 pb-0">
-                                                <div class="d-flex justify-content-between">
-                                                    <div class="text-capitalize text-left float-left text-bold"><span>Q{{ $key+1 }}.</span>  <span>{!! $rsa->privDecrypt($question->question) !!}</span></div>
-                                                </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <ul class="list-group ">
-                                                        <li class="list-group-item text-capitalize border-0 py-1">(A). &nbsp; {{ $rsa->privDecrypt($question->option1) }}</li>
-                                                        <li class="list-group-item text-capitalize py-1 border-0">(B). &nbsp; {{ $rsa->privDecrypt($question->option2) }}</li>
-                                                        <li class="list-group-item text-capitalize py-1 border-0">(C). &nbsp; {{ $rsa->privDecrypt($question->option3) }}</li>
-                                                        <li class="list-group-item text-capitalize py-1 border-0">(D). &nbsp; {{ $rsa->privDecrypt($question->option4) }}</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="badge badge-info">The question was published.. Just waiting for admin approval</div>
-                                            @break;
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
+        @foreach ($subjects as $subject)
+            @if($subject->status == 1)
+                <div>
+                    <div class="card rounded-0">
+                        <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div> <h4>{{ $subject->name }} Question  [total question: {{ count($subject->questions) }}] </h4></div>
+                            <a class="btn btn-warning rounded-0" href="{{ route('author.question.show', $subject->slug) }}">Show PDF View</a>
                         </div>
-                    @else
-                        {{-- <div class="badge badge-info">The question was published.. Just waiting for admin approval</div> --}}
-                    @endif
-                    @endforeach
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            @endif
+        @endforeach
    </div>
 @else
    <div class="badge badge-info">Your Request is pending.......... Please waiting for admin approval</div>
