@@ -14,8 +14,8 @@
 @section('current-page')
 <div class="breadcrumb-holder container-fluid">
     <ul class="breadcrumb d-flex justify-content-between">
-        <li class="breadcrumb-item active"><a href="{{ route('admin.index') }}" }}>Index</a></li>
-        <button class="btn btn-danger rounded-0 px-5" id="create_pdf">DOWNLOAD PDF</button>
+        <li class="breadcrumb-item active">{{ $subject->name }} &nbsp; <strong class="text-dark">Click to Download button <i class="fas fa-arrow-circle-right"></i></strong></li>
+        <button class="btn btn-danger rounded-0 px-5" id="create_pdf">DOWNLOAD PDF <i class="fas fa-file-download"></i></button>
     </ul>
 </div>
 @endsection
@@ -29,7 +29,7 @@
     @endphp
 
 
-    <div class="card pdfStyle makePDF" style="max-width: ">
+    <div class="card pdfStyle makePDF" style="opacity: .001;">
         <div class="card-header text-center">
             <p>MCQ Question</p>
             <p data-name="{{ $subject->name }}" id="subjectName">{{ $subject->name }}</p>
