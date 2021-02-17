@@ -43,7 +43,8 @@
                                    <div class="d-flex justify-content-between">
                                        <div class="d-flex justify-content-between">
                                            <h4>{{ $subject->name }} Question  [total question: {{ count($subject->questions) }}] </h4>
-                                           <a class="btn btn-warning btn-sm" href="{{ route('get-admin-pdf', $subject->id) }}">Get PDF</a>
+
+                                            <a class="btn btn-warning btn-sm" href="javascript:demoFromHTML()">Get PDF</a>
                                         </div>
                                        <div class="d-flex justify-content-between">
                                            <form id="userStatus" action="{{ route('admin.subject.update', $subject->id) }}" class="mr-3">
@@ -71,7 +72,7 @@
                                        </div>
                                    </div>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body" id="pdf_content">
                                     @foreach ($subject->questions as $key => $question)
                                     <div class="card rounded-0">
                                         <div class="card-header mb-0 pb-0">
@@ -106,6 +107,8 @@
 
 
 @push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
    <script>
     $(function(){
         $.ajaxSetup({
@@ -186,5 +189,35 @@
             }
         })
     })
+</script>
+
+<script>
+    function demoFromHTML() {
+        var pdf = new jsPDF('p', 'pt', 'letter');
+        source = $('#pdf_content')[0];
+        specialElementHandlers = {
+            '#bypassme': function (element, renderer) {
+                return true
+            }
+        };
+        margins = {
+            top: 80,
+            bottom: 60,
+            left: 40,
+            width: 522
+        };
+        pdf.fromHTML(
+            source,
+            margins.left,
+            margins.top, {
+                'width': margins.width,
+                'elementHandlers': specialElementHandlers
+            },
+
+            function (dispose) {
+                pdf.save('Test.pdf');
+            }, margins
+        );
+    }
 </script>
 @endpush

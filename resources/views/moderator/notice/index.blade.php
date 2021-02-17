@@ -7,7 +7,7 @@
 @section('current-page')
 <div class="breadcrumb-holder container-fluid">
     <ul class="breadcrumb">
-        <li class="breadcrumb-item active"><a href="{{ route('admin.index') }}" }}>Index</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('moderator.index') }}" }}>Index</a></li>
         <li class="breadcrumb-item active">Notice</li>
     </ul>
 </div>
@@ -23,7 +23,9 @@
         <div class="card rounded-0">
             <div class="card-header d-flex justify-content-between">
                 <h4 class="text-primary">Latest Notice</h4>
-                <a class="btn btn-dark rounded-0" href="{{ route('admin.notice.create') }}">Create New</a>
+                @if(Auth::user()->permission == 1)
+                <a class="btn btn-dark rounded-0" href="{{ route('moderator.notice.create') }}">Create New</a>
+                @endif
             </div>
             <div class="card-body">
                 <div class="card rounded-0">
@@ -37,20 +39,24 @@
                                     <th class="border border-dark" scope="col">#</th>
                                     <th class="border border-dark" scope="col">Title</th>
                                     <th class="border border-dark" scope="col">Date</th>
+                                    @if(Auth::user()->update_permission == 1)
                                     <th class="border border-dark">Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($notices as $key => $item)
                                     <tr class="border">
                                         <th class="border border-dark">{{ $key+1 }}</th>
-                                        <td class="border border-dark"><a href="{{ route('admin.notice.show', $item->id) }}">{{ $item->title }}</a></td>
-                                        <td class="border border-dark">{{ $item->created_at }}</td>
+                                        <td class="border border-dark"><a href="{{ route('moderator.notice.show', $item->id) }}">{{ $item->title }}</a></td>
+                                        <td class="border border-dark">{{ $item->created_at->diffForHumans() }}</td>
+                                        @if(Auth::user()->update_permission == 1)
                                         <td class="border border-dark">
-                                            <a href="{{ route('admin.notice.show', $item->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
-                                            <a href="{{ route('admin.notice.edit', $item->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
+                                            <a href="{{ route('moderator.notice.show', $item->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
+                                            <a href="{{ route('moderator.notice.edit', $item->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
                                             <a data-url="{{ route('admin.notice.destroy',$item->id) }}" class="deleteNotice btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
                                         </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

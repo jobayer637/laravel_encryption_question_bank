@@ -28,7 +28,7 @@ Route::post('/custor-register-create',  'RegisterController@registerCreate')->na
 Route::resource('notice', 'NoticeController');
 
 
-Route::get('/get-admin-pdf/{id}', 'PDF\PdfController@adminPdf')->name('get-admin-pdf');
+Route::get('generate-pdf', 'PDFController@generatePDF')->name('pdf');
 
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {

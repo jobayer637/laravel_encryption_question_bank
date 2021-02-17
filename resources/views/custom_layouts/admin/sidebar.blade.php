@@ -37,6 +37,7 @@
                 @endif
 
                 <li class="{{ Request::is('moderator/institutes*')?'active':'' }}"><a href="{{ route('moderator.institutes.index') }}"> <i class="fas fa-university"></i>Institutes </a></li>
+                <li class="{{ Request::is('moderator/notice*')?'active':'' }}"><a href="{{ route('moderator.notice.index') }}"> <i class="fas fa-inbox"></i>Notice </a></li>
             </ul>
           @endif
 

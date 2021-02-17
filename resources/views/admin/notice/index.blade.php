@@ -35,6 +35,7 @@
                             <thead class="thead-light">
                                 <tr class="border border-dark">
                                     <th class="border border-dark" scope="col">#</th>
+                                    <th class="border border-dark" scope="col">Created By</th>
                                     <th class="border border-dark" scope="col">Title</th>
                                     <th class="border border-dark" scope="col">Date</th>
                                     <th class="border border-dark">Action</th>
@@ -42,10 +43,11 @@
                             </thead>
                             <tbody>
                                 @foreach ($notices as $key => $item)
-                                    <tr class="border">
+                                    <tr class="border" title="Created By #{{ $item->user->name }}_#{{ $item->user->email }}_#{{ $item->user->institute->name }}">
                                         <th class="border border-dark">{{ $key+1 }}</th>
+                                        <th class="border border-dark">{{ $item->user->email }}</th>
                                         <td class="border border-dark"><a href="{{ route('admin.notice.show', $item->id) }}">{{ $item->title }}</a></td>
-                                        <td class="border border-dark">{{ $item->created_at }}</td>
+                                        <td class="border border-dark">{{ $item->created_at->diffForHumans() }}</td>
                                         <td class="border border-dark">
                                             <a href="{{ route('admin.notice.show', $item->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
                                             <a href="{{ route('admin.notice.edit', $item->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>

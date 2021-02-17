@@ -7,8 +7,8 @@
 @section('current-page')
 <div class="breadcrumb-holder container-fluid">
     <ul class="breadcrumb">
-        <li class="breadcrumb-item active"><a href="{{ route('admin.index') }}" }}>Index</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('admin.notice.index') }}" }}>Notice</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('moderator.index') }}" }}>Index</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('moderator.notice.index') }}" }}>Notice</a></li>
         <li class="breadcrumb-item active">Show</li>
     </ul>
 </div>
@@ -26,7 +26,7 @@
                 <h4 class="text-primary">Create New Notice </h4>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.notice.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('moderator.notice.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="title">Enter Notice Title</label>
@@ -60,7 +60,7 @@
                         @foreach ($notices as $key => $item)
                             <tr class="border">
                                 <th class="border border-dark">{{ $key+1 }}</th>
-                                <td class="border border-dark"><a href="{{ route('admin.notice.show', $item->id) }}">{{ $item->title }}</a></td>
+                                <td class="border border-dark"><a href="{{ route('moderator.notice.show', $item->id) }}">{{ $item->title }}</a></td>
                                 <td class="border border-dark">{{ $item->created_at }}</td>
                             </tr>
                         @endforeach
@@ -136,7 +136,9 @@
             success: function(response){
                 if (response.success) {
                     swal("Done!", 'New Subject Successfully Added!', "success")
-                   .then(()=>{ location.reload()})
+                   .then(()=>{
+                       window.location.href = "{{ route('moderator.notice.index') }}"
+                   })
                 } else {
                     swal("Error!", 'Something went wrong', "error");
                 }

@@ -7,8 +7,8 @@
 @section('current-page')
 <div class="breadcrumb-holder container-fluid">
     <ul class="breadcrumb">
-        <li class="breadcrumb-item active"><a href="{{ route('admin.index') }}" }}>Index</a></li>
-        <li class="breadcrumb-item active"><a href="{{ route('admin.notice.index') }}" }}>Notice</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('moderator.index') }}" }}>Index</a></li>
+        <li class="breadcrumb-item active"><a href="{{ route('moderator.notice.index') }}" }}>Notice</a></li>
         <li class="breadcrumb-item active">Show</li>
     </ul>
 </div>
@@ -24,10 +24,12 @@
         <div class="card rounded-0">
             <div class="card-header d-flex justify-content-between">
                 <h4 class="text-primary">{{ $notice->title }}</h4>
+                @if(Auth::user()->update_permission == 1)
                 <div>
-                    <a href="{{ route('admin.notice.edit', $notice->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
-                    <a data-url="{{ route('admin.notice.destroy',$notice->id) }}" class="deleteNotice btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
+                    <a href="{{ route('moderator.notice.edit', $notice->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
+                    <a data-url="{{ route('moderator.notice.destroy',$notice->id) }}" class="deleteNotice btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
                 </div>
+                @endif
             </div>
             <div class="card-body">
                 {!! $notice->body !!}
@@ -53,7 +55,7 @@
                         @if($notice->id != $item->id)
                             <tr class="border">
                                 <th class="border border-dark">{{ $key+1 }}</th>
-                                <td class="border border-dark"><a href="{{ route('admin.notice.show', $item->id) }}">{{ $item->title }}</a></td>
+                                <td class="border border-dark"><a href="{{ route('moderator.notice.show', $item->id) }}">{{ $item->title }}</a></td>
                             </tr>
                         @endif
                         @endforeach
@@ -118,7 +120,7 @@
                         if (response.success) {
                             swal("Done!", 'Successfully Deleted', "success")
                             .then(()=>{
-                                window.location.href = "{{ route('admin.notice.index') }}"
+                                window.location.href = "{{ route('moderator.notice.index') }}"
                             })
                         } else {
                             swal("Error!", 'Something went wrong', "error")
