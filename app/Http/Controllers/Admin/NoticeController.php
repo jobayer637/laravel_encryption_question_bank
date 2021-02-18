@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Jobs\NoticeMailJob;
+use App\Mail\myMail;
+use App\Mail\NoticeMail;
 use App\Notice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\User;
 
 class NoticeController extends Controller
 {
@@ -30,6 +34,7 @@ class NoticeController extends Controller
     public function create()
     {
         $notices = Notice::latest()->take(10)->get();
+
         return view('admin.notice.create', compact('notices'));
     }
 
@@ -48,6 +53,10 @@ class NoticeController extends Controller
         $newNotice->image = 'notice.jpg';
         $newNotice->body = $request->body;
         $newNotice->save();
+
+        //send Mail to all users
+        $users = User::get();
+        dispatch(new NoticeMailJob($newNotice, $users));
 
         return back();
     }
