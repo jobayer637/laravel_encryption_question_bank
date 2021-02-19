@@ -65,6 +65,40 @@
                 </div>
             </div>
         </div>
+
+        <div class="card rounded-0">
+            <div class="card-header">
+                <h4>Notices</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                    <thead>
+                    <tr>
+                        <th>S/L</th>
+                        <th>Notice</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($notices as $key => $notice)
+                    <tr>
+                        <th>{{ $key+1 }}</th>
+                        <td>{{ $notice->title }}</td>
+                        <td>{{ $notice->created_at->diffForHumans() }}</td>
+                        <td>
+                            @if($user->role_id!==1)
+                                <a href="{{ route('admin.notice.show', $notice->id) }}" class="btn btn-outline-success btn-sm mb-1"><i class="fas fa-eye"></i></a>
+                                <a href="{{ route('admin.notice.edit', $notice->id) }}" class="btn btn-outline-info btn-sm mb-1"><i class="fas fa-edit"></i></a>                            @endif
+                        </td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
     </div>
 
 

@@ -81,7 +81,8 @@ class AdminInstituteController extends Controller
      */
     public function show($id)
     {
-        //
+        $institute = Institute::where('id', $id)->first();
+        return view('admin.institute.show', compact('institute'));
     }
 
     /**

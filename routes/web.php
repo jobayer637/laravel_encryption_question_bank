@@ -24,12 +24,10 @@ Auth::routes();
 Route::get('/home',                     'HomeController@index')->name('home');
 Route::get('/custor-register',          'RegisterController@register')->name('custom-register');
 Route::post('/custor-register-create',  'RegisterController@registerCreate')->name('custom-register-create');
+
 // Route::resource('/question',            'QuestionController');
-
-Route::resource('notice', 'NoticeController');
-
-
-Route::get('generate-pdf', 'PDFController@generatePDF')->name('pdf');
+// Route::resource('notice', 'NoticeController');
+// Route::get('generate-pdf', 'PDFController@generatePDF')->name('pdf');
 
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth', 'admin']], function () {
@@ -65,4 +63,8 @@ Route::group(['as' => 'moderator.', 'prefix' => 'moderator', 'namespace' => 'Mod
     Route::resource('question',         'ModeratorQuestionController');
     Route::resource('institutes',       'InstituteController');
     Route::resource('notice',           'NoticeController');
+
+    Route::get('districts',             'ModeratorAjaxController@districts')->name('districts');
+    Route::get('upazilas',              'ModeratorAjaxController@upazilas')->name('upazilas');
+    Route::get('unions',                'ModeratorAjaxController@unions')->name('unions');
 });

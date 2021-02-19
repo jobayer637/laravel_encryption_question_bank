@@ -27,7 +27,7 @@
             <div class="col-md-7">
                 <div class="card rounded-0">
                     <div class="card-body sticky-top">
-                    <form method="POST" action="{{ route('admin.institutes.store') }}">
+                    <form method="POST" action="{{ route('moderator.institutes.store') }}">
                         @csrf
                         <div class="form-group">
                             <label for="board">Select Board</label>
@@ -114,7 +114,7 @@
     $(document).on('change', '#selectDivision', function(event){
         let id = $(this).val()
         $.ajax({
-            url: "{{ route('admin.districts') }}",
+            url: "{{ route('moderator.districts') }}",
             type: 'get',
             data: {id: id},
             beforeSend: function() {
@@ -131,7 +131,7 @@
      $(document).on('change', '#selectDistrict', function(event){
         let id = $(this).val()
         $.ajax({
-            url: "{{ route('admin.upazilas') }}",
+            url: "{{ route('moderator.upazilas') }}",
             type: 'get',
             data: {id: id},
             beforeSend: function() {
@@ -148,7 +148,7 @@
     $(document).on('change', '#selectUpazila', function(event){
         let id = $(this).val()
         $.ajax({
-            url: "{{ route('admin.unions') }}",
+            url: "{{ route('moderator.unions') }}",
             type: 'get',
             data: {id: id},
             beforeSend: function() {

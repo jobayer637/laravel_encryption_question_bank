@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Jobs\UserAccessMailJob;
 use Illuminate\Http\Request;
 use App\User;
 use App\Subject;
@@ -82,6 +82,14 @@ class AdminUserController extends Controller
         try {
             $data = $request->except(['_token']);
             $update = User::where('id', $id)->update($data);
+
+            $user = User::find($id);
+
+            // dd($request->status);
+
+            if ($request->status) {
+                dispatch(new UserAccessMailJob($user));
+            }
 
             return response()->json(['success' => true], 200);
         } catch (\Exception $ex) {

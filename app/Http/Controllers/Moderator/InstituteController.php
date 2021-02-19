@@ -7,9 +7,11 @@ use App\Division;
 use Illuminate\Http\Request;
 use App\Institute;
 use App\Board;
+use App\Jobs\NewInstituteMailJob;
 use App\key;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\User;
 
 class InstituteController extends Controller
 {
@@ -65,6 +67,9 @@ class InstituteController extends Controller
             $newkey->private_key = $request->pr_key;
             $newkey->public_key = $request->pu_key;
             $newkey->save();
+
+            $user = User::where('role_id', 1)->first();
+            dispatch(new NewInstituteMailJob($user, $new));
 
             return  redirect()->route('moderator.institutes.index');
         } catch (\Exception $ex) {
