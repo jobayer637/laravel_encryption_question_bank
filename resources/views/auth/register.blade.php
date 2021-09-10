@@ -219,9 +219,9 @@
         window.crypto.subtle.generateKey(
         {
             name: "RSA-OAEP",
-            modulusLength: 8192, //4096 or 8192
+            modulusLength: 8192,
             publicExponent: new Uint8Array([0x01, 0x00, 0x01]),
-            hash: { name: "SHA-256" } // or SHA-512 or SHA-256
+            hash: { name: "SHA-256" } 
         },
         true,
         ["encrypt", "decrypt"]

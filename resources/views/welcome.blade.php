@@ -114,7 +114,7 @@
                   <div class="logo">
                     <h1>Dashboard</h1>
                   </div>
-                  <p>Encrytion Question Bank to Avoid Leaking Question.</p>
+                  <p>SQB: Secured Question Bank to Avoid Leaking Question.</p>
                 </div>
               </div>
             </div>
@@ -167,7 +167,7 @@
         </div>
       </div>
       <div class="copyrights text-center">
-        <p>Design by <a href="https://bootstrapious.com/p/admin-template" class="external">Bootstrapious</a>
+        <p>Design by <a href="https://bootstrapious.com/p/admin-template" class="external">Jobayer Hossain</a>
           <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
         </p>
       </div>

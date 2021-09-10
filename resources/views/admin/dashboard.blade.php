@@ -54,7 +54,7 @@
                         <td>
                             @if($user->role_id!==1)
                                 <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-outline-success btn-sm mb-1"><i class="fas fa-eye"></i></a>
-                                <a href="" class="btn btn-outline-info btn-sm mb-1"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('admin.users.show', $user->id) }}" class="btn btn-outline-info btn-sm mb-1"><i class="fas fa-edit"></i></a>
                                 <a data-url="{{ route('admin.users.destroy',$user->id) }}" class="deleteUser btn btn-outline-danger btn-sm mb-1"><i class="fas fa-trash"></i></a>
                             @endif
                         </td>

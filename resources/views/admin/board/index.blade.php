@@ -45,7 +45,7 @@
                         <td><div class="badge {{ $board->status==true?'badge-warning':'' }}">{{ $board->status==true?'active':'deactive' }}</div></td>
                         <td>
                             <a href="{{ route('admin.board.show', $board->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
-                            <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
+                            <a href="{{ route('admin.board.show', $board->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
                             <button id="deleteBoard" data-url="{{ route('admin.board.destroy', $board->id) }}" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>

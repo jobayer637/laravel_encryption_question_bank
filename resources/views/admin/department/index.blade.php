@@ -45,7 +45,7 @@
                         <td><div class="badge {{ $department->status==true?'badge-warning':'' }}">{{ $department->status==true?'active':'deactive' }}</div></td>
                         <td>
                             <a href="{{ route('admin.department.show', $department->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
-                            <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
+                            <a href="{{ route('admin.department.show', $department->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
                             <button id="deleteBoard" data-url="{{ route('admin.department.destroy', $department->id) }}" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                         </td>
                     </tr>

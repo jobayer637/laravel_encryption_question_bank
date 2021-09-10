@@ -19,6 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/pending-user', function(){
+    return view('pending');
+});
+
 Auth::routes();
 
 Route::get('/home',                     'HomeController@index')->name('home');
@@ -67,4 +71,8 @@ Route::group(['as' => 'moderator.', 'prefix' => 'moderator', 'namespace' => 'Mod
     Route::get('districts',             'ModeratorAjaxController@districts')->name('districts');
     Route::get('upazilas',              'ModeratorAjaxController@upazilas')->name('upazilas');
     Route::get('unions',                'ModeratorAjaxController@unions')->name('unions');
+});
+
+Route::fallback(function () {
+    return redirect()->route('login');
 });

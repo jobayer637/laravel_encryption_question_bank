@@ -80,7 +80,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>SQB Login page</title>
+    <title>Bootstrap Material Admin by Bootstrapious.com</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="robots" content="all,follow">
@@ -122,44 +122,18 @@
             <div class="col-lg-6 bg-white">
               <div class="form d-flex align-items-center">
                 <div class="content">
-                     <form method="POST" action="{{ route('login') }}" class="form-validate">
-                        @csrf
-                        <div class="form-group">
-                            <input id="login-username" type="email" required data-msg="Please enter your username" class="input-material @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                            <label for="login-username" class="label-material">User Email</label>
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                    <div class="text-center">
+                        <div class="spinner-border text-warning" style="width: 2rem; height: 2rem;" role="status">
+                            <span class="sr-only">Loading...</span>
                         </div>
-                        <div class="form-group">
-                            <input id="login-password" type="password" name="password" required autocomplete="current-password" data-msg="Please enter your password" class="input-material @error('password') is-invalid @enderror">
-                            <label for="login-password" class="label-material">Password</label>
-                             @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div class="spinner-grow text-warning" style="width: 2rem; height: 2rem;" role="status">
+                            <span class="sr-only">Loading...</span>
                         </div>
-
-                        <div class="mb-3">
-                            <div class="">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                {{-- @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif --}}
-                            </div>
-                        </div>
-                        <!-- This should be submit button but I replaced it with <a> for demo purposes-->
-                  </form>
-                  <a href="{{ route('password.request') }}" class="forgot-pass">Forgot Password?</a><br><small>Do not have an account? </small><a href="{{ route('register') }}" class="signup">Signup</a>
-
+                    </div>
+                   <p class="text-warning"> Your Status is Panding. Please Waiting for admin approval</p>
+                    <br>
+                     <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="d-none d-sm-inline">Logout &nbsp;</span><i class="fa fa-sign-out"></i></a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none"> @csrf </form>
                 </div>
               </div>
             </div>
@@ -167,7 +141,8 @@
         </div>
       </div>
       <div class="copyrights text-center">
-        <p>Developed by <a href="https://github.com/jobayer637/laravel_encryption_question_bank" class="external">Jobayer Hossain</a>
+        <p>Design by <a href="https://bootstrapious.com/p/admin-template" class="external">Jobayer Hossain</a>
+          <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
         </p>
       </div>
     </div>

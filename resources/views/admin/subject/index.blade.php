@@ -50,7 +50,7 @@
                                 <td><span class="badge {{ $subject->permission==true?'badge-danger':'' }}">{{ $subject->permission==true?'permitted': 'not permit' }}</span></td>
                                 <td>
                                     <a href="{{ route('admin.subject.show', $subject->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
-                                    <button class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></button>
+                                    <a href="{{ route('admin.subject.show', $subject->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
                                     <button id="deleteQuestion" data-url="{{ route('admin.subject.destroy', $subject->id) }}" class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>

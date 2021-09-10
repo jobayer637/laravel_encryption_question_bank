@@ -63,7 +63,7 @@
                 <td><div class="badge badge-danger">{{ $institute->permission==true?'permitted': 'not permit' }}</div></td>
                 <td>
                     <a href="{{ route('admin.institutes.show', $institute->id) }}" class="btn btn-outline-success btn-sm"><i class="fas fa-eye"></i></a>
-                    <a href="" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
+                    <a href="{{ route('admin.institutes.show', $institute->id) }}" class="btn btn-outline-info btn-sm"><i class="fas fa-edit"></i></a>
                     <a data-url="" class="deleteUser btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></a>
                 </td>
             </tr>

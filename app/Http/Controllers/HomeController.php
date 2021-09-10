@@ -24,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(Auth::user()->status == 1) {
         if (Auth::user()->role_id == 1)
             return redirect()->route('admin.index');
 
@@ -32,5 +33,10 @@ class HomeController extends Controller
 
         if (Auth::user()->role_id == 3)
             return redirect()->route('author.index');
+    
+        } else {
+            return view('pending');
+        }
+
     }
 }

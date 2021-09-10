@@ -29,7 +29,7 @@
                         <h4>{{ $subject->name }} Question  [total question: {{ count($subject->questions) }}] </h4>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <a class="btn btn-dark btn-sm rounded-0" href="{{ route('get-admin-pdf', $subject->id) }}">Get PDF</a>
+                        {{-- <a class="btn btn-dark btn-sm rounded-0" href="{{ route('get-admin-pdf', $subject->id) }}">Get PDF</a> --}}
                         @if(Auth::user()->permission == 1)
                         <a href="{{ route('moderator.question.create', ['subject_id'=> $subject->id]) }}" class="btn btn-sm btn-warning rounded-0 ml-3">Add New Question</a>
                         @endif

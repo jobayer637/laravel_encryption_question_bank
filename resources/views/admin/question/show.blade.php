@@ -152,7 +152,7 @@
                  img = canvas.toDataURL("image/png"),
                  doc = new jsPDF({
                      unit: 'px',
-                     format: 'a4'
+                     format: 'legal'
                  });
                 doc.addImage(img, 'JPEG', 20, 20);
                 doc.save(subjectId+'_question.pdf');
@@ -171,4 +171,5 @@
 
     }());
 </script>
+
 @endpush

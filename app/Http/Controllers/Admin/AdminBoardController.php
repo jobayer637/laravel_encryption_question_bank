@@ -61,7 +61,8 @@ class AdminBoardController extends Controller
      */
     public function show($id)
     {
-        //
+        $board = Board::find($id);
+        return view('admin.board.show', compact('board'));
     }
 
     /**
@@ -84,7 +85,13 @@ class AdminBoardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except(['_token','_method']);
+        $update = Board::where('id',$id)->update($data);
+        if($update){
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-sm-6">
-            <p>Encryption Question Bank To Avoid Question Leaking</p>
+            <p>SQB: Secured Question Bank to Avoid Leaking Question.</p>
         </div>
         <div class="col-sm-6 text-right">
             <p>Developed by <a href="https://github.com/jobayer637/laravel_encryption_question_bank" class="external">Jobayer Hossain</a></p>

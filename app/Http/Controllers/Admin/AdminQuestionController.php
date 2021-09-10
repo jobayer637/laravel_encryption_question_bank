@@ -103,7 +103,23 @@ class AdminQuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $key = Key::where('user_id', 1)->first();
+            $rsa = new RSA\Encryption($key->private_key, $key->public_key);
+
+            $data = [];
+            $data['question'] = $rsa->publicEncrypt($request->question);
+            $data['option1'] = $rsa->publicEncrypt($request->option1);
+            $data['option2'] = $rsa->publicEncrypt($request->option2);
+            $data['option3'] = $rsa->publicEncrypt($request->option3);
+            $data['option4'] = $rsa->publicEncrypt($request->option4);
+            
+            $update = Question::where('id',$id)->update($data);
+
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['success' => false], 200);
+        }
     }
 
     /**

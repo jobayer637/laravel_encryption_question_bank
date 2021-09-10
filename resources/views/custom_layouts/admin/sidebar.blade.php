@@ -5,7 +5,7 @@
             <div class="avatar"><img src="{{ asset(Auth::user()->image) }}" alt="..." class="img-fluid rounded-circle"></div>
             <div class="title">
               <h1 class="h4">{{ Auth::user()->name }}</h1>
-              <p>Web Developer</p>
+              <p>{{ Auth::user()->email }}</p>
             </div>
           </div>
           <!-- Sidebar Navidation Menus--><span class="heading">Main</span>

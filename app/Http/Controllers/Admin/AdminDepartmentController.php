@@ -60,7 +60,8 @@ class AdminDepartmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $department = Department::find($id);
+        return view('admin.department.show', compact('department'));
     }
 
     /**
@@ -83,7 +84,13 @@ class AdminDepartmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except(['_token','_method']);
+        $update = Department::where('id',$id)->update($data);
+        if($update){
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

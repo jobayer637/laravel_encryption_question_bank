@@ -81,8 +81,10 @@ class AdminInstituteController extends Controller
      */
     public function show($id)
     {
+        $divisions = Division::get();
+        $boards = Board::get();
         $institute = Institute::where('id', $id)->first();
-        return view('admin.institute.show', compact('institute'));
+        return view('admin.institute.show', compact('divisions', 'boards','institute'));
     }
 
     /**
@@ -105,7 +107,10 @@ class AdminInstituteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except(['_token','_method']);
+        $update = Institute::where('id',$id)->update($data);
+        
+        return redirect()->back();
     }
 
     /**
